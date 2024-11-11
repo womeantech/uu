@@ -872,7 +872,7 @@ class HomePage extends StatelessWidget {
           // Navigate to ReportPage
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => const ReportPage()),
+            MaterialPageRoute(builder: (context) => ReportPage()),
           );
         } else if (title == 'Consultancy') {
           // Navigate to ConsultancyPage
@@ -2997,223 +2997,161 @@ class PetitionPageThree extends StatelessWidget {
     );
   }
 }
+//report page1
 
-//report page
-class ReportPage extends StatefulWidget {
-  const ReportPage({super.key});
-
-  @override
-  _ReportPageState createState() => _ReportPageState();
-}
-
-class _ReportPageState extends State<ReportPage> {
-  final _formKey = GlobalKey<FormState>();
-
-  // Form fields
-  String? _fullName;
-  String? _email;
-  String? _phoneNumber;
-  String? _location;
-  String? _incidentDate;
-  String? _description;
-
-  // For date picker
-  final TextEditingController _dateController = TextEditingController();
-
+class ReportPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Report Sexual Assault'),
-        backgroundColor: const Color(0xFF9775FA),
+        title: const Text(''),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: SingleChildScrollView(
-            child: Column(
-              children: <Widget>[
-                // Full Name
-                TextFormField(
-                  decoration: const InputDecoration(
-                    labelText: 'Full Name',
-                    border: OutlineInputBorder(),
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter your full name';
-                    }
-                    return null;
-                  },
-                  onSaved: (value) {
-                    _fullName = value;
-                  },
-                ),
-                const SizedBox(height: 20),
+      body: const SingleChildScrollView( // Wrap the body in SingleChildScrollView
+        child: Padding(
+          padding: EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Main introductory paragraph
+              Text(
+                'Reporting Guidelines and Agreement',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 16), // Spacing between paragraphs
+              // Intro to the rules
+              Text(
+                'Be careful as you proceed, please read the guidelines before continuing.',
+                style: TextStyle(fontSize: 14),
+              ),
+              SizedBox(height: 12),
+              // First guideline
+              Text(
+                '1. Truthfulness: Be as detailed as possible when describing the situation. Provide specific information to help professionals understand the issue better.',
+                style: TextStyle(fontSize: 18),
+              ),
+              SizedBox(height: 12),
+              // Second guideline
+              Text(
+                '2. Respect for All Parties: Avoid using offensive language or false information. Our goal is to maintain a safe space for everyone, and accurate reporting helps us achieve that.',
+                style: TextStyle(fontSize: 18),
+              ),
+              SizedBox(height: 12),
+              // Third guideline
+              Text(
+                '3. Privacy and Confidentiality: Respect the privacy of others. Do not share personal information about others unless it is necessary for the report.',
+                style: TextStyle(fontSize: 18),
+              ),
+              SizedBox(height: 12),
+              // Additional guidelines
+              Text(
+                '4. Openness: If you are uncertain about any information, mention that in your report. Being honest and transparent helps us understand the situation better.',
+                style: TextStyle(fontSize: 18),
+              ),
+              SizedBox(height: 24),
+              // Final paragraph
+              Text(
+                'By signing this petition, you agree to the terms and conditions outlined in our agreement. This helps us to create a safe, trustworthy platform for everyone.',
+                style: TextStyle(fontSize: 16),
+              ),
+              SizedBox(height: 30), // Space before signature
 
-                // Email
-                TextFormField(
-                  decoration: const InputDecoration(
-                    labelText: 'Email',
-                    border: OutlineInputBorder(),
+              // Signature input field
+              Text.rich(
+                TextSpan(
+                  text: 'Signature', // Signature part, bold, purple, and bigger size
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFF9775FA), // Use your custom purple color
                   ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter your email';
-                    }
-                    if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
-                      return 'Please enter a valid email';
-                    }
-                    return null;
-                  },
-                  onSaved: (value) {
-                    _email = value;
-                  },
-                ),
-                const SizedBox(height: 20),
-
-                // Phone Number
-                TextFormField(
-                  decoration: const InputDecoration(
-                    labelText: 'Phone Number',
-                    border: OutlineInputBorder(),
-                  ),
-                  keyboardType: TextInputType.phone,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter your phone number';
-                    }
-                    return null;
-                  },
-                  onSaved: (value) {
-                    _phoneNumber = value;
-                  },
-                ),
-                const SizedBox(height: 20),
-
-                // Location
-                TextFormField(
-                  decoration: const InputDecoration(
-                    labelText: 'Location',
-                    border: OutlineInputBorder(),
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter the location of the incident';
-                    }
-                    return null;
-                  },
-                  onSaved: (value) {
-                    _location = value;
-                  },
-                ),
-                const SizedBox(height: 20),
-
-                // Incident Date (using a date picker)
-                TextFormField(
-                  controller: _dateController,
-                  decoration: const InputDecoration(
-                    labelText: 'Date of Incident',
-                    border: OutlineInputBorder(),
-                    suffixIcon: Icon(Icons.calendar_today),
-                  ),
-                  readOnly: true,
-                  onTap: () async {
-                    DateTime? pickedDate = await showDatePicker(
-                      context: context,
-                      initialDate: DateTime.now(),
-                      firstDate: DateTime(2000),
-                      lastDate: DateTime.now(),
-                    );
-                    if (pickedDate != null) {
-                      setState(() {
-                        _dateController.text =
-                            '${pickedDate.year}/${pickedDate.month}/${pickedDate.day}';
-                        _incidentDate = _dateController.text;
-                      });
-                    }
-                  },
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please select the date of the incident';
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(height: 20),
-
-                // Description
-                TextFormField(
-                  decoration: const InputDecoration(
-                    labelText: 'Description',
-                    border: OutlineInputBorder(),
-                  ),
-                  maxLines: 5,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please provide details of the incident';
-                    }
-                    return null;
-                  },
-                  onSaved: (value) {
-                    _description = value;
-                  },
-                ),
-                const SizedBox(height: 20),
-
-                // Submit Button
-                SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: _submitForm,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF9775FA),
+                  children: <TextSpan>[
+                    TextSpan(
+                      text: '(press enter after you put your name):', // Smaller and regular text
+                      style: TextStyle(
+                        fontSize: 14, // Smaller font size
+                        fontWeight: FontWeight.normal, // Normal font weight
+                        color: Colors.black, // Set color to black for the rest of the text
+                      ),
                     ),
-                    child: const Text('Submit Report'),
-                  ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+              SizedBox(height: 8),
+              SignatureInput(),
+            ],
           ),
         ),
       ),
     );
   }
+}
 
-  void _submitForm() {
-    if (_formKey.currentState!.validate()) {
-      _formKey.currentState!.save();
+class SignatureInput extends StatefulWidget {
+  const SignatureInput({Key? key}) : super(key: key);
 
-      // For now, show a dialog with the form data
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text('Report Submitted'),
-            content: SingleChildScrollView(
-              child: ListBody(
-                children: <Widget>[
-                  Text('Full Name: $_fullName'),
-                  Text('Email: $_email'),
-                  Text('Phone: $_phoneNumber'),
-                  Text('Location: $_location'),
-                  Text('Date of Incident: $_incidentDate'),
-                  Text('Description: $_description'),
-                ],
-              ),
+  @override
+  _SignatureInputState createState() => _SignatureInputState();
+}
+
+class _SignatureInputState extends State<SignatureInput> {
+  final TextEditingController _controller = TextEditingController();
+  final FocusNode _focusNode = FocusNode();
+  String errorMessage = ""; // Variable to store error message
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Show error message if signature is empty
+        if (errorMessage.isNotEmpty)
+          Padding(
+            padding: const EdgeInsets.only(bottom: 8.0),
+            child: Text(
+              errorMessage,
+              style: TextStyle(color: Colors.red, fontSize: 14),
             ),
-            actions: <Widget>[
-              TextButton(
-                child: const Text('OK'),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-            ],
-          );
-        },
-      );
-    }
+          ),
+        
+        // TextField for signature
+        TextField(
+          controller: _controller,
+          focusNode: _focusNode,
+          decoration: InputDecoration(
+            hintText: 'Type your name as signature',
+            border: OutlineInputBorder(),
+          ),
+          onSubmitted: (String value) {
+            if (value.isEmpty) {
+              // If the signature is empty, show the error message
+              setState(() {
+                errorMessage = "Please enter your signature.";
+              });
+            } else {
+              // If signature is not empty, navigate to the next page
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => NextPage()),
+              );
+            }
+          },
+        ),
+      ],
+    );
   }
 }
+
+class NextPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Next Page'),
+      ),
+      body: Center(
+        child: Text('You have successfully signed and moved to the next page!'),
+      ),
+    );
+  }
+}
+
