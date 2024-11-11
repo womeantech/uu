@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:tenagariandebet/main.dart'; // Replace with the path to your MyApp widget
+// Replace with the path to your MyApp widget
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {

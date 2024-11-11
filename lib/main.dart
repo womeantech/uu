@@ -872,7 +872,7 @@ class HomePage extends StatelessWidget {
           // Navigate to ReportPage
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => ReportPage()),
+            MaterialPageRoute(builder: (context) => const ReportPage()),
           );
         } else if (title == 'Consultancy') {
           // Navigate to ConsultancyPage
@@ -3000,6 +3000,8 @@ class PetitionPageThree extends StatelessWidget {
 //report page1
 
 class ReportPage extends StatelessWidget {
+  const ReportPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -3087,7 +3089,7 @@ class ReportPage extends StatelessWidget {
 }
 
 class SignatureInput extends StatefulWidget {
-  const SignatureInput({Key? key}) : super(key: key);
+  const SignatureInput({super.key});
 
   @override
   _SignatureInputState createState() => _SignatureInputState();
@@ -3109,7 +3111,7 @@ class _SignatureInputState extends State<SignatureInput> {
             padding: const EdgeInsets.only(bottom: 8.0),
             child: Text(
               errorMessage,
-              style: TextStyle(color: Colors.red, fontSize: 14),
+              style: const TextStyle(color: Colors.red, fontSize: 14),
             ),
           ),
         
@@ -3117,7 +3119,7 @@ class _SignatureInputState extends State<SignatureInput> {
         TextField(
           controller: _controller,
           focusNode: _focusNode,
-          decoration: InputDecoration(
+          decoration: const InputDecoration(
             hintText: 'Type your name as signature',
             border: OutlineInputBorder(),
           ),
@@ -3131,7 +3133,7 @@ class _SignatureInputState extends State<SignatureInput> {
               // If signature is not empty, navigate to the next page
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => NextPage()),
+                MaterialPageRoute(builder: (context) => const NextPage()),
               );
             }
           },
@@ -3141,17 +3143,384 @@ class _SignatureInputState extends State<SignatureInput> {
   }
 }
 
+//reportpage2
+
 class NextPage extends StatelessWidget {
+  const NextPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Next Page'),
+        title: const Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Padding(
+              padding: EdgeInsets.only(top: 30.0),
+              child: Text(
+                'Report',
+                style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+              ),
+            ),
+            SizedBox(width: 8),
+            Padding(
+              padding: EdgeInsets.only(top: 30.0),
+              child: Icon(
+                Icons.report,
+                color: Colors.black,
+                size: 30,
+              ),
+            ),
+          ],
+        ),
       ),
-      body: Center(
-        child: Text('You have successfully signed and moved to the next page!'),
+      body: Stack(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: 30),
+                  const Text('First Name', style: TextStyle(fontSize: 18, color: Color(0xFF9775FA))),
+                  const SizedBox(height: 16),
+                  const TextField(
+                    decoration: InputDecoration(
+                      hintText: 'Enter your first name',
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                  const SizedBox(height: 18),
+                  const Text('Last Name', style: TextStyle(fontSize: 18, color: Color(0xFF9775FA))),
+                  const SizedBox(height: 16),
+                  const TextField(
+                    decoration: InputDecoration(
+                      hintText: 'Enter your last name',
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                  const SizedBox(height: 18),
+                  const Text('Age', style: TextStyle(fontSize: 18, color: Color(0xFF9775FA))),
+                  const SizedBox(height: 16),
+                  const TextField(
+                    decoration: InputDecoration(
+                      hintText: 'Enter your age',
+                      border: OutlineInputBorder(),
+                    ),
+                    keyboardType: TextInputType.number,
+                  ),
+                  const SizedBox(height: 18),
+                  const Text('Gender', style: TextStyle(fontSize: 18, color: Color(0xFF9775FA))),
+                  const SizedBox(height: 16),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Checkbox(value: false, onChanged: (bool? value) {}),
+                          const Text('Female', style: TextStyle(fontSize: 18, color: Color(0xFF9775FA))),
+                        ],
+                      ),
+                      const SizedBox(height: 8),
+                      Row(
+                        children: [
+                          Checkbox(value: false, onChanged: (bool? value) {}),
+                          const Text('Male', style: TextStyle(fontSize: 18, color: Color(0xFF9775FA))),
+                        ],
+                      ),
+                      const SizedBox(height: 16),
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+                  const Text('Location', style: TextStyle(fontSize: 18, color: Color(0xFF9775FA))),
+                  const SizedBox(height: 18),
+                  const Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Text('City', style: TextStyle(fontSize: 18, color: Color(0xFF9775FA))),
+                          SizedBox(width: 18),
+                          Expanded(
+                            child: TextField(
+                              decoration: InputDecoration(
+                                hintText: 'Enter your city',
+                                border: OutlineInputBorder(),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 18),
+                      Row(
+                        children: [
+                          Text('Subcity', style: TextStyle(fontSize: 18, color: Color(0xFF9775FA))),
+                          SizedBox(width: 18),
+                          Expanded(
+                            child: TextField(
+                              decoration: InputDecoration(
+                                hintText: 'Enter your subcity',
+                                border: OutlineInputBorder(),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Align(
+            alignment: Alignment.bottomRight,
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => Report3()), // Replace with the actual page
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                  backgroundColor: Color(0xFF9775FA),
+                ),
+                child: const Text(
+                  'Next',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
 }
+
+
+//report page3
+class Report3 extends StatelessWidget {
+  const Report3({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text(''),
+      ),
+      body: Stack(
+        children: [
+          const SingleChildScrollView(
+            padding: EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Main introductory paragraph
+                Text(
+                  'Reporting Guidelines and Agreement',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(height: 16), // Spacing between paragraphs
+                
+                // Intro to the rules
+                Text(
+                  'Be careful as you proceed, please read the guidelines before continuing.',
+                  style: TextStyle(fontSize: 14),
+                ),
+                SizedBox(height: 12),
+                
+                // Guidelines
+                Text(
+                  '1. Truthfulness: Be as detailed as possible when describing the situation. Provide specific information to help professionals understand the issue better.',
+                  style: TextStyle(fontSize: 18),
+                ),
+                SizedBox(height: 12),
+                
+                Text(
+                  '2. Respect for All Parties: Avoid using offensive language or false information. Our goal is to maintain a safe space for everyone, and accurate reporting helps us achieve that.',
+                  style: TextStyle(fontSize: 18),
+                ),
+                SizedBox(height: 12),
+                
+                Text(
+                  '3. Privacy and Confidentiality: Respect the privacy of others. Do not share personal information about others unless it is necessary for the report.',
+                  style: TextStyle(fontSize: 18),
+                ),
+                SizedBox(height: 12),
+                
+                Text(
+                  '4. Openness: If you are uncertain about any information, mention that in your report. Being honest and transparent helps us understand the situation better.',
+                  style: TextStyle(fontSize: 18),
+                ),
+                SizedBox(height: 24),
+                
+                // Final paragraph
+                Text(
+                  'By signing this petition, you agree to the terms and conditions outlined in our agreement. This helps us to create a safe, trustworthy platform for everyone.',
+                  style: TextStyle(fontSize: 16),
+                ),
+                SizedBox(height: 30), // Space before the next section
+              ],
+            ),
+          ),
+          
+          // Next button positioned at the bottom right
+          Positioned(
+            bottom: 16,
+            right: 16,
+            child: ElevatedButton(
+              onPressed: () {
+                // Navigate to the next page when the button is pressed
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const SuccessPage()),
+                );
+              },
+              child: const Text('Next'),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+
+  // report4
+class SuccessPage extends StatelessWidget {
+  const SuccessPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    // Display the success message after the page loads
+    Future.delayed(Duration.zero, () {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Successfully completed')),
+      );
+    });
+
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Success Page'),
+        backgroundColor: Colors.purple[700],
+      ),
+      body: Stack(
+        children: [
+          Center(
+            child: Text(
+              'Welcome to the Success Page!',
+              style: TextStyle(fontSize: 24, color: Colors.purple[700]),
+            ),
+          ),
+          
+          // Next button positioned at the bottom right
+          Positioned(
+            bottom: 16,
+            right: 16,
+            child: ElevatedButton(
+              onPressed: () {
+                // Navigate to the next page when the button is pressed
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const SuccessPge()), // Replace NextPage with the desired page
+                );
+              },
+              child: const Text('Next'),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.purple[700],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+
+
+  // report 5
+class SuccessPge extends StatelessWidget {
+  const SuccessPge({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    // Display the success message after the page loads
+    Future.delayed(Duration.zero, () {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Successfully completed')),
+      );
+    });
+
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Success Page'),
+        backgroundColor: Colors.purple[700],
+      ),
+      body: Stack(
+        children: [
+          Center(
+            child: Text(
+              'Welcome to the Success Page!',
+              style: TextStyle(fontSize: 24, color: Colors.purple[700]),
+            ),
+          ),
+          
+          // Button positioned at the bottom right to navigate to ReportPage6
+          Positioned(
+            bottom: 16,
+            right: 16,
+            child: ElevatedButton(
+              onPressed: () {
+                // Navigate to ReportPage6 when the button is pressed
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const SuccessPae()),
+                );
+              },
+              child: const Text('Next'),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.purple[700],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+  //report 6
+  class SuccessPae extends StatelessWidget {
+  const SuccessPae({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    // Display the success message after the page loads
+    Future.delayed(Duration.zero, () {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Successfully completed')),
+      );
+    });
+
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Success Page'),
+        backgroundColor: Colors.purple[700],
+      ),
+      body: Center(
+        child: Text(
+          'Welcome to the Success Page!',
+          style: TextStyle(fontSize: 24, color: Colors.purple[700]),
+        ),
+      ),
+    );
+  }
+}
+
+
 
