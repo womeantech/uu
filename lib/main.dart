@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-
+import 'dart:async';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 void main() => runApp(const MaterialApp(
   home: FirstPage(), // Set the first page as home
 ));
@@ -24,7 +25,7 @@ class FirstPage extends StatelessWidget {
           mainAxisSize: MainAxisSize.min, // Use minimum size for the column
           children: [
             const Text(
-              'ተናጋሪ አንደበት !', // Text above the image
+              'Her Shield !', // Text above the image
               style: TextStyle(
                 fontSize: 30.0,
                 fontWeight: FontWeight.bold,
@@ -57,7 +58,6 @@ class FirstPage extends StatelessWidget {
 }
 
 // Second Page
-
 class SecondPage extends StatefulWidget {
   const SecondPage({super.key});
 
@@ -68,8 +68,8 @@ class SecondPage extends StatefulWidget {
 class _SecondPageState extends State<SecondPage> {
   String? _selectedLanguage; // Variable to hold the selected language
   final List<String> _languages = [
- 
     'Amharic',
+    'English',
     'Oromiffa',
     'Tigrinya',
     'Somali',
@@ -102,8 +102,29 @@ class _SecondPageState extends State<SecondPage> {
             height: 100, // Adjust the logo to fit the space
           ),
         ),
-        title: const Text(''),
-        centerTitle: true,
+        title: Align(
+          alignment: Alignment.centerLeft,
+          child: DropdownButton<String>(
+            value: _selectedLanguage,
+            hint: const Text(
+              'Select Language',
+              style: TextStyle(color: Colors.white), // White hint text
+            ),
+            dropdownColor: const Color(0xFF9775FA), // Dropdown background color
+            items: _languages.map((String language) {
+              return DropdownMenuItem<String>(
+                value: language,
+                child: Text(language, style: const TextStyle(color: Colors.black)), // Black text for items
+              );
+            }).toList(),
+            onChanged: (String? newValue) {
+              setState(() {
+                _selectedLanguage = newValue;
+              });
+            },
+          ),
+        ),
+        centerTitle: false, // Align title to the left
         backgroundColor: const Color(0xFF9775FA),
       ),
       backgroundColor: const Color(0xFF9775FA),
@@ -117,33 +138,7 @@ class _SecondPageState extends State<SecondPage> {
               width: 250,
               height: 250,
             ),
-            const SizedBox(height: 50),
-
-            // Language Selection Dropdown
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0), // Add some padding
-              child: DropdownButton<String>(
-                value: _selectedLanguage,
-                hint: const Text(
-                  'Select Language',
-                  style: TextStyle(color: Colors.white), // White hint text
-                ),
-                dropdownColor: const Color(0xFF9775FA), // Dropdown background color
-                items: _languages.map((String language) {
-                  return DropdownMenuItem<String>(
-                    value: language,
-                    child: Text(language, style: const TextStyle(color: Colors.black)), // Black text for items
-                  );
-                }).toList(),
-                onChanged: (String? newValue) {
-                  setState(() {
-                    _selectedLanguage = newValue;
-                  });
-                },
-              ),
-            ),
-
-            const SizedBox(height: 20), // Space between dropdown and buttons
+            const SizedBox(height: 50), // Space between dropdown and buttons
 
             // Register Button
             SizedBox(
@@ -187,7 +182,7 @@ class _SecondPageState extends State<SecondPage> {
                     MaterialPageRoute(builder: (context) => const SignUpPage()),
                   );
                 },
-                style: ElevatedButton.styleFrom(
+                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.white,
                   foregroundColor: Colors.black,
                   shape: RoundedRectangleBorder(
@@ -232,7 +227,7 @@ class RegisterPage extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start, // Align content to the left
                 children: [
-                  const Spacer(), // Pushes content towards the bottom
+                     const Spacer(), // Pushes content towards the bottom
 
                   const Text(
                     'Register',
@@ -274,7 +269,7 @@ class RegisterPage extends StatelessWidget {
                     height: 50.0, // Set height of the TextField
                     child: TextField(
                       decoration: InputDecoration(
-                        labelText: 'Email',
+                        labelText: 'Country',
                         labelStyle: const TextStyle(color: Colors.white),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(16.0),
@@ -297,9 +292,9 @@ class RegisterPage extends StatelessWidget {
                     width: MediaQuery.of(context).size.width * 0.8, // Set width to 80% of screen
                     height: 50.0, // Set height of the TextField
                     child: TextField(
-                      obscureText: true, // Hides the password text
+                      obscureText: false, 
                       decoration: InputDecoration(
-                        labelText: 'Password',
+                        labelText: 'City',
                         labelStyle: const TextStyle(color: Colors.white),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(16.0),
@@ -644,7 +639,7 @@ class SignUpPage extends StatelessWidget {
     );
   }
 }
-//Homepage
+
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
@@ -751,7 +746,7 @@ class HomePage extends StatelessWidget {
                         // Navigate to FormPage when the Home button is tapped
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => const FormPage()),
+                          MaterialPageRoute(builder: (context) => const ForumPage()),
                         );
                       },
                       style: ElevatedButton.styleFrom(
@@ -878,7 +873,7 @@ class HomePage extends StatelessWidget {
           // Navigate to PetitionPage
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => const PetitionPage()),
+            MaterialPageRoute(builder: (context) => const petitionpage1()),
           );
         } else if (title == 'Report') {
           // Navigate to ReportPage
@@ -896,7 +891,7 @@ class HomePage extends StatelessWidget {
           // Navigate to ForumPage
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => const FormPage()), // Update to ForumPage
+            MaterialPageRoute(builder: (context) => const ForumPage()), // Update to ForumPage
           );
         }
       },
@@ -947,8 +942,6 @@ class HomePage extends StatelessWidget {
   }
 }
 
-
-
 //profile pageflutter run
 
 
@@ -957,108 +950,204 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Define a GlobalKey for ScaffoldState
+    final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
-        backgroundColor: const Color(0xFF9775FA),
-        title: const Text('Profile', style: TextStyle(color: Colors.white)),
-        centerTitle: true,
-      ),
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              Color(0xFF9775FA), // Top purple color
-              Color.fromARGB(255, 155, 140, 199), // Faded purple
-            ],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
+        backgroundColor: Colors.white,
+        elevation: 0,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.black),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+        title: const Text(
+          'Profile',
+          style: TextStyle(
+            color: Colors.black,
+            fontWeight: FontWeight.bold,
           ),
         ),
-        child: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const CircleAvatar(
-                  radius: 50,
-                  backgroundColor: Colors.white,
-                  child: Icon(
-                    Icons.person,
-                    color: Color(0xFF9775FA),
-                    size: 60,
+        centerTitle: true,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.menu, color: Colors.black),
+            onPressed: () {
+              // Use the GlobalKey to open the endDrawer
+              _scaffoldKey.currentState?.openEndDrawer();
+            },
+          ),
+        ],
+      ),
+      endDrawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            DrawerHeader(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [const Color(0xFF9775FA), Colors.purple.shade100],
+                ),
+              ),
+              child: const Text(
+                'Menu',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                ),
+              ),
+            ),
+            ListTile(
+              title: const Text('Your Story'),
+              trailing: const Icon(Icons.arrow_forward_ios),
+              onTap: () {
+                // Navigate to Your Story page
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) =>  ShareStoryPage(),
+                  ),
+                );
+              },
+            ),
+            ListTile(
+              title: const Text('Donate'),
+              trailing: const Icon(Icons.arrow_forward_ios),
+              onTap: () {
+                // Navigate to Feedback page
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const GoFundMePage(),
+                  ),
+                );
+              },
+            ),
+            ListTile(
+              title: const Text('Petition'),
+              trailing: const Icon(Icons.arrow_forward_ios),
+              onTap: () {
+                // Navigate to Petition page
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const petitionpage1(),
+                  ),
+                );
+              },
+            ),
+            ListTile(
+              title: const Text('Reported'),
+              trailing: const Icon(Icons.arrow_forward_ios),
+              onTap: () {
+                // Navigate to Reported page
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const ReportPage(),
+                  ),
+                );
+              },
+            ),
+          ],
+        ),
+      ),
+      body: Column(
+        children: [
+          const SizedBox(height: 20),
+          Stack(
+            alignment: Alignment.center,
+            children: [
+              CircleAvatar(
+                radius: 50,
+                backgroundColor: const Color(0xFF9775FA),
+                child: const Icon(
+                  Icons.person,
+                  size: 60,
+                  color: Colors.black,
+                ),
+              ),
+              Positioned(
+                bottom: 0,
+                right: 10,
+                child: Container(
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.2),
+                        blurRadius: 4,
+                        spreadRadius: 1,
+                      ),
+                    ],
+                  ),
+                  child: IconButton(
+                    icon: const Icon(Icons.edit, size: 15, color: Colors.red),
+                    onPressed: () {
+                      // Handle edit profile picture action
+                    },
                   ),
                 ),
-                const SizedBox(height: 16),
-                const Text(
-                  'Name',
-                  style: TextStyle(color: Colors.white),
-                ),
-                TextField(
-                  decoration: InputDecoration(
-                    hintText: 'Enter your name here',
-                    fillColor: Colors.white,
-                    filled: true,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                      borderSide: BorderSide.none,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 16),
-                const Text(
-                  'Email',
-                  style: TextStyle(color: Colors.white),
-                ),
-                TextField(
-                  decoration: InputDecoration(
-                    hintText: 'Enter your email here',
-                    fillColor: Colors.white,
-                    filled: true,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                      borderSide: BorderSide.none,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 20),
-                // Submit button
-                ElevatedButton(
-                  onPressed: () {
-                    // Add your submit logic here
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF9775FA), // Button background color
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                  ),
-                  child: const Text(
-                    'SAVE',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ),
-              ],
+              ),
+            ],
+          ),
+          const SizedBox(height: 10),
+          const Text(
+            'Emebet Molla',
+            style: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
             ),
           ),
-        ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: const Color(0xFF9775FA),
-        selectedItemColor: Colors.white,
-        unselectedItemColor: Colors.white54,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
+          const SizedBox(height: 5),
+          const Text(
+            'Addis Ababa, Ethiopia',
+            style: TextStyle(
+              fontSize: 16,
+              color: Colors.grey,
+            ),
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.warning),
-            label: 'Warnings',
+          const SizedBox(height: 30),
+          ElevatedButton(
+            onPressed: () {
+              // Handle log out action
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: const Color(0xFF9775FA),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
+              padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 12),
+            ),
+            child: const Text(
+              'Log Out',
+              style: TextStyle(color: Colors.white),
+            ),
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.chat),
-            label: 'Chat',
+          const Spacer(),
+          GestureDetector(
+            onTap: () {
+               Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const AboutUsPage(),
+                ),
+              );
+            },
+            child: Container(
+              color: const Color(0xFF9775FA),
+              width: double.infinity,
+              padding: const EdgeInsets.symmetric(vertical: 15),
+              alignment: Alignment.center,
+              child: const Text(
+                'About us',
+                style: TextStyle(color: Colors.white, fontSize: 16),
+              ),
+            ),
           ),
         ],
       ),
@@ -1066,7 +1155,9 @@ class ProfilePage extends StatelessWidget {
   }
 }
 
+
 //consultancy1 page
+
 class ConsultancyPage extends StatelessWidget {
   const ConsultancyPage({super.key});
 
@@ -1076,18 +1167,17 @@ class ConsultancyPage extends StatelessWidget {
       backgroundColor: Colors.white,
       body: Column(
         children: [
-          // Top Text - "Together Against Violence"
-          const Padding(
-            padding: EdgeInsets.symmetric(vertical: 20.0),
-            child: Text(
-              'Together Against Violence',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.w500,
-                color: Colors.deepOrangeAccent,
-                fontFamily: 'Cursive', // Custom font similar to the one in the image
+          // Back Arrow Icon Button at the top left
+          Align(
+            alignment: Alignment.topLeft,
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: IconButton(
+                icon: const Icon(Icons.arrow_back, color: Colors.black),
+                onPressed: () {
+                  Navigator.pop(context); // Navigate back to the previous page
+                },
               ),
-              textAlign: TextAlign.center,
             ),
           ),
           // Main Image Section (Top Women Image)
@@ -1113,8 +1203,8 @@ class ConsultancyPage extends StatelessWidget {
                 children: [
                   Image.asset(
                     'assets/img.png', // Replace with your silhouette image
-                    height: 100,
-                    width: 100,
+                    height: 150,
+                    width: 150,
                     color: Colors.black, // Silhouette color
                   ),
                   const Padding(
@@ -1124,7 +1214,7 @@ class ConsultancyPage extends StatelessWidget {
                       'Get help, Learn and know more about yourself.',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        fontSize: 16,
+                        fontSize: 24,
                         color: Colors.white,
                       ),
                     ),
@@ -1132,17 +1222,8 @@ class ConsultancyPage extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: TextButton(
-                          onPressed: () {
-                            // Skip button action
-                          },
-                          child: const Text(
-                            'Skip',
-                            style: TextStyle(color: Colors.white),
-                          ),
-                        ),
+                      const Padding(
+                        padding: EdgeInsets.all(16.0),
                       ),
                       Padding(
                         padding: const EdgeInsets.all(16.0),
@@ -1166,39 +1247,13 @@ class ConsultancyPage extends StatelessWidget {
               ),
             ),
           ),
-          // Bottom Navigation Bar
-          BottomNavigationBar(
-            type: BottomNavigationBarType.fixed,
-            backgroundColor: Colors.white,
-            items: const [
-              BottomNavigationBarItem(
-                icon: Icon(Icons.warning_amber_outlined, color: Colors.black),
-                label: '',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.handshake, color: Colors.black),
-                label: '',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.home, color: Colors.purple), // Active home icon
-                label: '',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.check_box_outline_blank, color: Colors.black), // Custom icon
-                label: '',
-              ),
-            ],
-            currentIndex: 2, // Home is selected
-            onTap: (index) {
-              // Handle bottom navigation tap
-            },
-          ),
         ],
       ),
     );
   }
 }
 //support for consultancy page
+
 class SupportPage extends StatelessWidget {
   const SupportPage({super.key});
 
@@ -1208,6 +1263,19 @@ class SupportPage extends StatelessWidget {
       backgroundColor: const Color(0xFF9775FA),
       body: Column(
         children: [
+          // Back Arrow Icon Button at the top left
+          Align(
+            alignment: Alignment.topLeft,
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: IconButton(
+                icon: const Icon(Icons.arrow_back, color: Colors.black),
+                onPressed: () {
+                  Navigator.pop(context); // Navigate back to the previous page
+                },
+              ),
+            ),
+          ),
           // Top Image Banner
           Expanded(
             flex: 3,
@@ -1222,21 +1290,22 @@ class SupportPage extends StatelessWidget {
               ),
             ),
           ),
-
           // Grid Section
           Expanded(
             flex: 5,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 20.0),
               child: GridView.count(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 crossAxisCount: 2,
-                crossAxisSpacing: 16.0,
-                mainAxisSpacing: 16.0,
+                crossAxisSpacing: 10.0,
+                mainAxisSpacing: 10.0,
+                childAspectRatio: 0.8,
                 children: [
                   _buildSupportCard(
                     context,
                     imagePath: 'assets/new2.png', // Replace with your asset image
-                    title: 'Past Trauma',
+                    title: 'Post Traumatic Stress Disorder(PTSD)',
                     onTap: () {
                       // Navigate to TraumaPage
                       Navigator.push(
@@ -1248,67 +1317,42 @@ class SupportPage extends StatelessWidget {
                   _buildSupportCard(
                     context,
                     imagePath: 'assets/new3.png', // Replace with your asset image
-                    title: 'Mental Health',
+                    title: 'Depression',
                     onTap: () {
-                      // Navigate to MentalHealthPage
+                      // Navigate to DepressionPage
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => const MentalHealthPage()),
+                        MaterialPageRoute(builder: (context) => const DepressionPage()),
                       );
                     },
                   ),
                   _buildSupportCard(
                     context,
                     imagePath: 'assets/new4.png', // Replace with your asset image
-                    title: 'Abuse Recovery',
+                    title: 'Anxiety Disorder',
                     onTap: () {
-                      // Navigate to AbuseRecoveryPage
+                      // Navigate to AnxietyDisorderPage
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => const AbuseRecoveryPage()),
+                        MaterialPageRoute(builder: (context) => const AnxietyDisorderPage()),
                       );
                     },
                   ),
                   _buildSupportCard(
                     context,
                     imagePath: 'assets/new.png', // Replace with your asset image
-                    title: 'Build your Confidence',
+                    title: 'Dissociative Disorder',
                     onTap: () {
-                      // Navigate to ConfidencePage
+                      // Navigate to DissociativeDisorderPage
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => const ConfidencePage()),
+                        MaterialPageRoute(builder: (context) => const DissociativeDisorderPage()),
                       );
                     },
                   ),
                 ],
               ),
             ),
-          ),
-
-          // Bottom Navigation Bar
-          BottomNavigationBar(
-            backgroundColor: Colors.white,
-            selectedItemColor: const Color(0xFF9775FA),
-            unselectedItemColor: Colors.black,
-            items: const [
-              BottomNavigationBarItem(
-                icon: Icon(Icons.warning_amber_outlined),
-                label: '',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.handshake_outlined),
-                label: '',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.home_outlined),
-                label: '',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.chat_outlined),
-                label: '',
-              ),
-            ],
           ),
         ],
       ),
@@ -1356,10 +1400,44 @@ class SupportPage extends StatelessWidget {
     );
   }
 }
-
 //trauma
-class TraumaPage extends StatelessWidget {
+class TraumaPage extends StatefulWidget {
   const TraumaPage({super.key});
+
+  @override
+  _TraumaPageState createState() => _TraumaPageState();
+}
+class _TraumaPageState extends State<TraumaPage> {
+  // Define the YouTube Player Controllers
+  late YoutubePlayerController _controller1;
+  late YoutubePlayerController _controller2;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller1 = YoutubePlayerController(
+      initialVideoId: 'hzSx4rMyVjI', // Replace with your first YouTube video ID
+      flags: const YoutubePlayerFlags(
+        autoPlay: false,
+        mute: false,
+      ),
+    );
+
+    _controller2 = YoutubePlayerController(
+      initialVideoId: 'YOUR_SECOND_VIDEO_ID', // Replace with your second YouTube video ID
+      flags: const YoutubePlayerFlags(
+        autoPlay: false,
+        mute: false,
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    _controller1.dispose();
+    _controller2.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -1367,20 +1445,19 @@ class TraumaPage extends StatelessWidget {
       backgroundColor: const Color(0xFF9775FA), // Background purple color
       appBar: AppBar(
         backgroundColor: const Color(0xFF9775FA),
-        elevation: 0, // Remove shadow under the app bar
+        elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () {
-            // Add back button functionality
-            Navigator.pop(context);
-          },
+          onPressed: () => Navigator.pop(context),
         ),
-        title: const Text('Past Trauma',
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-            )),
+        title: const Text(
+          'Post Traumatic Stress Disorder',
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
+        ),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -1390,8 +1467,6 @@ class TraumaPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 20),
-
-              // What is Trauma? Text
               const Text(
                 "What is Trauma?",
                 style: TextStyle(
@@ -1401,8 +1476,6 @@ class TraumaPage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 10),
-
-              // Understanding and Healing Section
               const Text(
                 "Understanding and Healing",
                 style: TextStyle(
@@ -1423,35 +1496,17 @@ class TraumaPage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 10),
-
-              // Watch Video button
-              TextButton(
-                onPressed: () {
-                  // Add your video watch functionality
-                },
-                child: const Text(
-                  'Watch Video',
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.white,
-                    decoration: TextDecoration.underline,
-                  ),
-                ),
-              ),
-              const SizedBox(height: 10),
-
-              // Introduction to Trauma Image
-              Center(
-                child: Image.asset(
-                  'assets/tt.jpg', // Path to the image
-                  height: 180,
-                  width: double.infinity,
-                  fit: BoxFit.cover,
+              // First YouTube Video
+              YoutubePlayer(
+                controller: _controller1,
+                showVideoProgressIndicator: true,
+                progressIndicatorColor: Colors.white,
+                progressColors: const ProgressBarColors(
+                  playedColor: Colors.white,
+                  handleColor: Colors.deepOrangeAccent,
                 ),
               ),
               const SizedBox(height: 20),
-
-              // Types of Trauma
               const Text(
                 "Types of Trauma",
                 style: TextStyle(
@@ -1460,70 +1515,266 @@ class TraumaPage extends StatelessWidget {
                   fontSize: 18,
                 ),
               ),
-              const SizedBox(height: 10),
-              Center(
-                child: Image.asset(
-                  'assets/diff.avif', // Path to the image
-                  height: 390,
-                  width: double.infinity,
-                  fit: BoxFit.cover,
+              const SizedBox(height: 20),
+              // Second YouTube Video
+              YoutubePlayer(
+                controller: _controller2,
+                showVideoProgressIndicator: true,
+                progressIndicatorColor: Colors.white,
+                progressColors: const ProgressBarColors(
+                  playedColor: Colors.white,
+                  handleColor: Colors.deepOrangeAccent,
                 ),
               ),
               const SizedBox(height: 20),
-
-              // The Journey to Healing Section
-              const Text(
-                "The Journey to Healing",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18,
-                ),
-              ),
-              const SizedBox(height: 10),
-              Center(
-                child: Image.asset(
-                  'assets/jj.jpg', // Path to the image
-                  height: 150,
-                  width: double.infinity,
-                  fit: BoxFit.cover,
-                ),
-              ),
+              // Add other sections as needed...
             ],
           ),
         ),
-      ),
-
-      // Bottom Navigation Bar
-      bottomNavigationBar: BottomNavigationBar(
+        ),
+      floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.white,
-        selectedItemColor: const Color(0xFF9775FA),
-        unselectedItemColor: Colors.black,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.warning),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.arrow_forward),
-            label: '',
-          ),
-        ],
+        child: const Icon(
+          Icons.arrow_forward,
+          color: Color(0xFF9775FA),
+        ),
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => PsychiatristListPage()),
+          );
+        },
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat, // Positioned in the bottom center
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
 }
+//Psychiatrist
+class Psychiatrist {
+  final String name;
+  final String title;
+  final String workplace;
+  final String phone;
+  final String email;
+  final String bio;
+  final String imagePath;
 
-//trauma2
+  Psychiatrist({
+    required this.name,
+    required this.title,
+    required this.workplace,
+    required this.phone,
+    required this.email,
+    required this.bio,
+    required this.imagePath,
+  });
+}
 
-class TraumaPage2 extends StatelessWidget {
-  const TraumaPage2({super.key});
+class PsychiatristListPage extends StatelessWidget {
+  final List<Psychiatrist> psychiatrists = [
+    Psychiatrist(
+  name: "Dr. Bezawit Sedika",
+  title: "Medical Doctor || Psychiatrist",
+  workplace: "Lancet Hospital, A.A",
+  phone: "+251 911 234 567",
+  email: "bezawit@example.com",
+  bio: "Experienced psychiatrist specializing in mental health support.",
+  imagePath: 'assets/doc2.jpg',
+),
+Psychiatrist(
+  name: "Dr. Samuel Yilma",
+  title: "Consultant Psychiatrist",
+  workplace: "Addis Ababa General Hospital, A.A",
+  phone: "+251 912 345 678",
+  email: "samuel@example.com",
+  bio: "Providing compassionate care and treatment for mental disorders.",
+  imagePath: './assets/doc9.jpg',
+),
+Psychiatrist(
+  name: "Dr. Tigist Alemu",
+  title: "Psychiatrist",
+  workplace: "Black Lion Hospital, A.A",
+  phone: "+251 913 456 789",
+  email: "tigist@example.com",
+  bio: "Specializes in adolescent and adult psychiatry.",
+  imagePath: 'assets/doc2.jpg',
+),
+Psychiatrist(
+  name: "Dr. Biruk Tadesse",
+  title: "Psychiatrist",
+  workplace: "Bethzatha Hospital, A.A",
+  phone: "+251 914 567 890",
+  email: "biruk@example.com",
+  bio: "Expert in managing anxiety and mood disorders.",
+  imagePath: 'assets/doc1.jpg',
+),
+Psychiatrist(
+  name: "Dr. Meron Degu",
+  title: "Consultant Psychiatrist",
+  workplace: "Hayat Medical Center, A.A",
+  phone: "+251 915 678 901",
+  email: "meron@example.com",
+  bio: "Dedicated to improving mental well-being through holistic treatment.",
+  imagePath: 'assets/doc3.jpg',
+),
+Psychiatrist(
+  name: "Dr. Yosef Kebede",
+  title: "Psychiatrist",
+  workplace: "Myungsung Christian Medical Center, A.A",
+  phone: "+251 916 789 012",
+  email: "yosef@example.com",
+  bio: "Focuses on trauma and stress-related mental health issues.",
+  imagePath: 'assets/doc5.jpg',
+),
+Psychiatrist(
+  name: "Dr. Fikirte Solomon",
+  title: "Senior Psychiatrist",
+  workplace: "Zewditu Memorial Hospital, A.A",
+  phone: "+251 917 890 123",
+  email: "fikirte@example.com",
+  bio: "Experienced in providing mental health care for all age groups.",
+  imagePath: 'assets/doc6.jpg',
+),
+Psychiatrist(
+  name: "Dr. Girma Melaku",
+  title: "Psychiatrist",
+  workplace: "Yekatit 12 Hospital, A.A",
+  phone: "+251 918 901 234",
+  email: "girma@example.com",
+  bio: "Passionate about early intervention in psychiatric conditions.",
+  imagePath: 'assets/doc8.jpg',
+),
+Psychiatrist(
+  name: "Dr. Lemlem Abebe",
+  title: "Consultant Psychiatrist",
+  workplace: "St. Gabriel General Hospital, A.A",
+  phone: "+251 919 012 345",
+  email: "lemlem@example.com",
+  bio: "Specializes in child and adolescent psychiatry.",
+  imagePath: 'assets/doc7.jpg',
+),
+Psychiatrist(
+  name: "Dr. Amanuel Wondimu",
+  title: "Psychiatrist",
+  workplace: "Amanuel Mental Health Specialized Hospital, A.A",
+  phone: "+251 920 123 456",
+  email: "amanuel@example.com",
+  bio: "Expert in psychotic disorders and rehabilitation services.",
+  imagePath: 'assets/doc1.jpg',
+),
+    // Add more psychiatrists here...
+  ];
 
+   PsychiatristListPage({super.key});
+   @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: const Color(0xFF9775FA),
+      appBar: AppBar(
+        backgroundColor: const Color(0xFF9775FA),
+        title: const Text(
+          'List of Psychiatrists',
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
+        ),
+        centerTitle: true,
+      ),
+      body: ListView.builder(
+        itemCount: psychiatrists.length,
+        itemBuilder: (context, index) {
+          return ExpansionTile(
+            leading: CircleAvatar(
+              backgroundImage: AssetImage(psychiatrists[index].imagePath),
+            ),
+            title: Text(
+              psychiatrists[index].name,
+              style: const TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            subtitle: Text(
+              psychiatrists[index].title,
+              style: const TextStyle(color: Colors.white70),
+            ),
+            iconColor: Colors.white,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Workplace: ${psychiatrists[index].workplace}",
+                      style: const TextStyle(color: Colors.white),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      "Phone: ${psychiatrists[index].phone}",
+                      style: const TextStyle(color: Colors.white),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      "Email: ${psychiatrists[index].email}",
+                      style: const TextStyle(color: Colors.white),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      "Bio: ${psychiatrists[index].bio}",
+                      style: const TextStyle(color: Colors.white70),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          );
+        },
+      ),
+    );
+  }
+}
+//Depression
+class DepressionPage extends StatefulWidget {
+  const DepressionPage({super.key});
+
+  @override
+  _DepressionPageState createState() => _DepressionPageState();
+}
+
+class _DepressionPageState extends State<DepressionPage> {
+  late YoutubePlayerController _controller1;
+  late YoutubePlayerController _controller2;
+
+  @override
+  void initState() {
+    super.initState();
+    
+    _controller1 = YoutubePlayerController(
+      initialVideoId: 'VIDEO_ID_1', // Replace with your first YouTube video ID
+      flags: const YoutubePlayerFlags(
+        autoPlay: false,
+        mute: false,
+      ),
+    );
+    
+    _controller2 = YoutubePlayerController(
+      initialVideoId: 'VIDEO_ID_2', // Replace with your second YouTube video ID
+      flags: const YoutubePlayerFlags(
+        autoPlay: false,
+        mute: false,
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    _controller1.dispose();
+    _controller2.dispose();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -1537,201 +1788,14 @@ class TraumaPage2 extends StatelessWidget {
             Navigator.pop(context);
           },
         ),
-        title: const Text('Introduction to Trauma.',
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-            )),
-        centerTitle: true,
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 20),
-              Center(
-                child: Image.asset(
-                  'assets/mm.jpg', // Replace with your image
-                  height: 180,
-                  width: double.infinity,
-                  fit: BoxFit.cover,
-                ),
-              ),
-              const SizedBox(height: 20),
-              const Text(
-                '"Welcome to our video on understanding trauma. '
-                'Today, we’ll explore what trauma is, how it affects individuals, '
-                'particularly survivors of sexual abuse, and why understanding this concept '
-                'is crucial for healing and empowerment."',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 16,
-                ),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 30),
-
-              // Comment section header
-              const Text(
-                "What is Your Idea?",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
-                ),
-              ),
-              const Text(
-                "We want to hear from you!",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 16,
-                ),
-              ),
-              const SizedBox(height: 20),
-
-              // Comment Input
-              Row(
-                children: [
-                  Expanded(
-                    child: TextField(
-                      decoration: InputDecoration(
-                        hintText: "Say something...",
-                        filled: true,
-                        fillColor: Colors.white,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                          borderSide: BorderSide.none,
-                        ),
-                        contentPadding: const EdgeInsets.symmetric(
-                          vertical: 10.0,
-                          horizontal: 16.0,
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 10),
-                  ElevatedButton(
-                    onPressed: () {
-                      // Handle comment submission
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.orange, // Comment button color
-                      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                    ),
-                    child: const Text("Comment"),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 20),
-
-              // Sample comments
-              _buildComment("Hanna", "It would be helpful to develop resources that include personal stories."),
-              const SizedBox(height: 10),
-              _buildComment("Abel", "Developing videos around healing methods would be very useful."),
-              const SizedBox(height: 10),
-              _buildComment("Buna", "This was helpful to understand, it should be shared widely."),
-            ],
+        title: const Text(
+          'Depression',
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
           ),
         ),
-      ),
-
-      // Bottom Navigation Bar
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.white,
-        selectedItemColor: const Color(0xFF9775FA),
-        unselectedItemColor: Colors.black,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.warning),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.arrow_forward),
-            label: '',
-          ),
-        ],
-      ),
-    );
-  }
-
-  // Comment widget
-  Widget _buildComment(String name, String commentText) {
-    return Card(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10.0),
-      ),
-      elevation: 2,
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            CircleAvatar(
-              backgroundColor: Colors.grey.shade400,
-              child: Text(name[0]), // Display the first letter of the name
-            ),
-            const SizedBox(width: 10),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    name,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                    ),
-                  ),
-                  const SizedBox(height: 5),
-                  Text(
-                    commentText,
-                    style: const TextStyle(
-                      fontSize: 14,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-//mental health
-
-class MentalHealthPage extends StatelessWidget {
-  const MentalHealthPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xFF9775FA), // Purple background color
-      appBar: AppBar(
-        backgroundColor: const Color(0xFF9775FA),
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-        title: const Text('Mental Health',
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-            )),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -1742,9 +1806,8 @@ class MentalHealthPage extends StatelessWidget {
             children: [
               const SizedBox(height: 20),
 
-              // Section Title
               const Text(
-                'What is Mental Health?',
+                'What is Depression?',
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
@@ -1752,8 +1815,6 @@ class MentalHealthPage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 10),
-
-              // Subtitle Text
               const Text(
                 'Vital part of our overall well-being',
                 style: TextStyle(
@@ -1763,10 +1824,8 @@ class MentalHealthPage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 10),
-
-              // Description Text
               const Text(
-                'Trauma refers to the emotional and psychological response to a distressing or life-threatening experience. It can manifest in various ways, impacting thoughts, feelings, and behaviors.',
+                'Depression refers to a mood disorder that causes persistent feelings of sadness and loss of interest. It can significantly impact various aspects of one\'s life.',
                 style: TextStyle(
                   fontSize: 16,
                   color: Colors.white,
@@ -1774,40 +1833,9 @@ class MentalHealthPage extends StatelessWidget {
               ),
               const SizedBox(height: 20),
 
-              // Watch Video Section
-              Row(
-                children: [
-                  ElevatedButton(
-                    onPressed: () {
-                      // Handle video watching logic here
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.orange, // Button color
-                      padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                    ),
-                    child: const Text("Watch Video"),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 20),
-
-              // Section Image
-              Center(
-                child: Image.asset(
-                  'assets/as.jpg', // Replace with your image path
-                  height: 180,
-                  width: double.infinity,
-                  fit: BoxFit.cover,
-                ),
-              ),
-              const SizedBox(height: 20),
-
-              // Subsections with descriptions
+              // First YouTube Video Section
               const Text(
-                'Why Mental Health Matters',
+                'Learn More About Depression',
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
@@ -1815,19 +1843,16 @@ class MentalHealthPage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 10),
-
-              Center(
-                child: Image.asset(
-                  'assets/ma.avif', // Replace with image
-                  height: 180,
-                  width: double.infinity,
-                  fit: BoxFit.cover,
-                ),
+              YoutubePlayer(
+                controller: _controller1,
+                showVideoProgressIndicator: true,
+                progressIndicatorColor: Colors.white,
               ),
               const SizedBox(height: 20),
 
+              // Second YouTube Video Section
               const Text(
-                'Common Mental Health Challenges',
+                'Tips to Manage Depression',
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
@@ -1835,67 +1860,74 @@ class MentalHealthPage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 10),
-
-              Center(
-                child: Image.asset(
-                  'assets/b.jpg', // Replace with image
-                  height: 180,
-                  width: double.infinity,
-                  fit: BoxFit.cover,
-                ),
+              YoutubePlayer(
+                controller: _controller2,
+                showVideoProgressIndicator: true,
+                progressIndicatorColor: Colors.white,
               ),
               const SizedBox(height: 20),
-
-              const Text(
-                'Recognizing Signs of Mental Health Issues',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
-              ),
-              const SizedBox(height: 10),
-
-              Center(
-                child: Image.asset(
-                  'assets/brain.jpg', // Replace with image
-                  height: 180,
-                  width: double.infinity,
-                  fit: BoxFit.cover,
-                ),
-              ),
-              const SizedBox(height: 30),
             ],
           ),
         ),
       ),
-
+      
       // Bottom Navigation Bar
-      bottomNavigationBar: BottomNavigationBar(
+      floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.white,
-        selectedItemColor: const Color(0xFF9775FA),
-        unselectedItemColor: Colors.black,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.warning),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.arrow_forward),
-            label: '',
-          ),
-        ],
+        child: const Icon(
+          Icons.arrow_forward,
+          color: Color(0xFF9775FA),
+        ),
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => PsychiatristListPage()),
+          );
+        },
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
 }
+
 //abuse recovery
-class AbuseRecoveryPage extends StatelessWidget {
-  const AbuseRecoveryPage({super.key});
+class AnxietyDisorderPage extends StatefulWidget {
+  const AnxietyDisorderPage({super.key});
+
+  @override
+  _AnxietyDisorderPageState createState() => _AnxietyDisorderPageState();
+}
+
+class _AnxietyDisorderPageState extends State<AnxietyDisorderPage> {
+  late YoutubePlayerController _controller1;
+  late YoutubePlayerController _controller2;
+  @override
+  void initState() {
+    super.initState();
+    
+    _controller1 = YoutubePlayerController(
+      initialVideoId: 'VIDEO_ID_1', // Replace with your first YouTube video ID
+      flags: const YoutubePlayerFlags(
+        autoPlay: false,
+        mute: false,
+      ),
+    );
+    
+    _controller2 = YoutubePlayerController(
+      initialVideoId: 'VIDEO_ID_2', // Replace with your second YouTube video ID
+      flags: const YoutubePlayerFlags(
+        autoPlay: false,
+        mute: false,
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    _controller1.dispose();
+    _controller2.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -1910,12 +1942,14 @@ class AbuseRecoveryPage extends StatelessWidget {
             Navigator.pop(context);
           },
         ),
-        title: const Text('Mental Health',
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-            )),
+        title: const Text(
+          'Anxiety Disorder',
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
+        ),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -1925,10 +1959,9 @@ class AbuseRecoveryPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 20),
-
               // Section Title
               const Text(
-                'What is Mental Health?',
+                'What is Anxiety Disorder?',
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
@@ -1936,7 +1969,6 @@ class AbuseRecoveryPage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 10),
-
               // Subtitle Text
               const Text(
                 'Vital part of our overall well-being',
@@ -1947,10 +1979,9 @@ class AbuseRecoveryPage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 10),
-
               // Description Text
               const Text(
-                'Trauma refers to the emotional and psychological response to a distressing or life-threatening experience. It can manifest in various ways, impacting thoughts, feelings, and behaviors.',
+                'Anxiety disorder is a mental health condition that involves excessive worry, fear, or nervousness about various aspects of life. It can manifest in various ways, impacting thoughts, feelings, and behaviors.',
                 style: TextStyle(
                   fontSize: 16,
                   color: Colors.white,
@@ -1958,40 +1989,9 @@ class AbuseRecoveryPage extends StatelessWidget {
               ),
               const SizedBox(height: 20),
 
-              // Watch Video Section
-              Row(
-                children: [
-                  ElevatedButton(
-                    onPressed: () {
-                      // Handle video watching logic here
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.orange, // Button color
-                      padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                    ),
-                    child: const Text("Watch Video"),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 20),
-
-              // Section Image
-              Center(
-                child: Image.asset(
-                  'assets/abu.jpg', // Replace with your image path
-                  height: 180,
-                  width: double.infinity,
-                  fit: BoxFit.cover,
-                ),
-              ),
-              const SizedBox(height: 20),
-
-              // Subsections with descriptions
+              // First YouTube Video Section
               const Text(
-                'Why Mental Health Matters',
+                'Understanding Anxiety Disorders',
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
@@ -1999,19 +1999,15 @@ class AbuseRecoveryPage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 10),
-
-              Center(
-                child: Image.asset(
-                  'assets/hea.jpg', // Replace with image
-                  height: 180,
-                  width: double.infinity,
-                  fit: BoxFit.cover,
-                ),
+              YoutubePlayer(
+                controller: _controller1,
+                showVideoProgressIndicator: true,
+                progressIndicatorColor: Colors.white,
               ),
               const SizedBox(height: 20),
-
+              // Second YouTube Video Section
               const Text(
-                'Common Mental Health Challenges',
+                'Coping Strategies for Anxiety',
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
@@ -2019,68 +2015,76 @@ class AbuseRecoveryPage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 10),
-
-              Center(
-                child: Image.asset(
-                  'assets/chall.jpg', // Replace with image
-                  height: 180,
-                  width: double.infinity,
-                  fit: BoxFit.cover,
-                ),
+              YoutubePlayer(
+                controller: _controller2,
+                showVideoProgressIndicator: true,
+                progressIndicatorColor: Colors.white,
               ),
               const SizedBox(height: 20),
-
-              const Text(
-                'Recognizing Signs of Mental Health Issues',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
-              ),
-              const SizedBox(height: 10),
-
-              Center(
-                child: Image.asset(
-                  'assets/rec.jpg', // Replace with image
-                  height: 180,
-                  width: double.infinity,
-                  fit: BoxFit.cover,
-                ),
-              ),
-              const SizedBox(height: 30),
             ],
           ),
         ),
       ),
-
+      
       // Bottom Navigation Bar
-      bottomNavigationBar: BottomNavigationBar(
+      floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.white,
-        selectedItemColor: const Color(0xFF9775FA),
-        unselectedItemColor: Colors.grey,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.notifications_outlined),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home_outlined),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person_outline),
-            label: '',
-          ),
-        ],
+        child: const Icon(
+          Icons.arrow_forward,
+          color: Color(0xFF9775FA),
+        ),
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => PsychiatristListPage()),
+          );
+        },
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
 }
+
+
 //build confidence
-class ConfidencePage extends StatelessWidget {
-  const ConfidencePage({super.key});
+class DissociativeDisorderPage extends StatefulWidget {
+  const DissociativeDisorderPage({super.key});
 
+  @override
+  _DissociativeDisorderPageState createState() => _DissociativeDisorderPageState();
+}
+
+class _DissociativeDisorderPageState extends State<DissociativeDisorderPage> {
+  late YoutubePlayerController _controller1;
+  late YoutubePlayerController _controller2;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _controller1 = YoutubePlayerController(
+      initialVideoId: 'video_id_1', // Replace with your first video ID
+      flags: const YoutubePlayerFlags(
+        autoPlay: false,
+        mute: false,
+      ),
+    );
+
+    _controller2 = YoutubePlayerController(
+      initialVideoId: 'video_id_2', // Replace with your second video ID
+      flags: const YoutubePlayerFlags(
+        autoPlay: false,
+        mute: false,
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    _controller1.dispose();
+    _controller2.dispose();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -2094,7 +2098,7 @@ class ConfidencePage extends StatelessWidget {
             Navigator.pop(context);
           },
         ),
-        title: const Text('Mental Health',
+        title: const Text('Dissociative Disorder',
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
@@ -2109,8 +2113,6 @@ class ConfidencePage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 20),
-
-              // Section Title
               const Text(
                 'What is Mental Health?',
                 style: TextStyle(
@@ -2120,8 +2122,6 @@ class ConfidencePage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 10),
-
-              // Subtitle Text
               const Text(
                 'Vital part of our overall well-being',
                 style: TextStyle(
@@ -2131,8 +2131,6 @@ class ConfidencePage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 10),
-
-              // Description Text
               const Text(
                 'Trauma refers to the emotional and psychological response to a distressing or life-threatening experience. It can manifest in various ways, impacting thoughts, feelings, and behaviors.',
                 style: TextStyle(
@@ -2141,41 +2139,8 @@ class ConfidencePage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 20),
-
-              // Watch Video Section
-              Row(
-                children: [
-                  ElevatedButton(
-                    onPressed: () {
-                      // Handle video watching logic here
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.orange, // Button color
-                      padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                    ),
-                    child: const Text("Watch Video"),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 20),
-
-              // Section Image
-              Center(
-                child: Image.asset(
-                  'assets/ss.jpg', // Replace with your image path
-                  height: 180,
-                  width: double.infinity,
-                  fit: BoxFit.cover,
-                ),
-              ),
-              const SizedBox(height: 20),
-
-              // Subsections with descriptions
               const Text(
-                'Why Mental Health Matters',
+                'Video: Understanding Dissociative Disorders',
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
@@ -2183,19 +2148,13 @@ class ConfidencePage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 10),
-
-              Center(
-                child: Image.asset(
-                  'assets/well.jpg', // Replace with image
-                  height: 180,
-                  width: double.infinity,
-                  fit: BoxFit.cover,
-                ),
+              YoutubePlayer(
+                controller: _controller1,
+                showVideoProgressIndicator: true,
               ),
               const SizedBox(height: 20),
-
               const Text(
-                'Common Mental Health Challenges',
+                'Video: Managing Dissociative Disorders',
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
@@ -2203,144 +2162,106 @@ class ConfidencePage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 10),
-
-              Center(
-                child: Image.asset(
-                  'assets/heal.jpg', // Replace with image
-                  height: 180,
-                  width: double.infinity,
-                  fit: BoxFit.cover,
-                ),
+              YoutubePlayer(
+                controller: _controller2,
+                showVideoProgressIndicator: true,
               ),
               const SizedBox(height: 20),
-
-              const Text(
-                'Recognizing Signs of Mental Health Issues',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
-              ),
-              const SizedBox(height: 10),
-
-              Center(
-                child: Image.asset(
-                  'assets/health.jpg', // Replace with image
-                  height: 180,
-                  width: double.infinity,
-                  fit: BoxFit.cover,
-                ),
-              ),
-              const SizedBox(height: 30),
             ],
           ),
         ),
       ),
-
-      // Bottom Navigation Bar
-      bottomNavigationBar: BottomNavigationBar(
+            floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.white,
-        selectedItemColor: const Color(0xFF9775FA),
-        unselectedItemColor: Colors.grey,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.notifications_outlined),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home_outlined),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person_outline),
-            label: '',
-          ),
-        ],
+        child: const Icon(
+          Icons.arrow_forward,
+          color: Color(0xFF9775FA),
+        ),
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => PsychiatristListPage()),
+          );
+        },
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
 }
-
 //Forum page
-class FormPage extends StatelessWidget {
-  const FormPage({super.key});
+class ForumPage extends StatelessWidget {
+  const ForumPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Forum Page'),
         backgroundColor: const Color(0xFF9775FA),
       ),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            // Top Purple Section with Image
+            // Top Purple Section with Image and Text Side by Side
             Container(
               decoration: const BoxDecoration(
                 color: Color(0xFF9775FA),
                 borderRadius: BorderRadius.vertical(bottom: Radius.circular(30)),
               ),
-              child: const Padding(
-                padding: EdgeInsets.all(20.0),
-                child: Column(
-                  children: [
-                    // Image section (circular avatar)
-                    CircleAvatar(
-                      radius: 50,
-                      backgroundImage: AssetImage('assets/prowomen.png'), // Make sure to add the image to assets
-                    ),
-                    SizedBox(height: 20),
-                    // Name and title
-                    Text(
-                      'Bezawit',
-                      style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
+              padding: const EdgeInsets.all(20.0),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  // Circular Image
+                  CircleAvatar(
+                    radius: 60,
+                    backgroundImage: AssetImage('assets/prowomen.png'),
+                  ),
+                  const SizedBox(width: 20),
+                  // Text Info Next to the Image
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Bisrat Teshome',
+                        style: TextStyle(
+                          fontSize: 26,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
                       ),
-                    ),
-                    SizedBox(height: 10),
-                    Text(
-                      'Women Supporter',
-                      style: TextStyle(
-                        fontSize: 18,
-                        color: Colors.white,
+                      const SizedBox(height: 8),
+                      Text(
+                        'Women Supporter',
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Colors.white,
+                        ),
                       ),
-                    ),
-                    SizedBox(height: 10),
-                    Text(
-                      'Future Plan:\nHobby:',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.white,
+                      const SizedBox(height: 6),
+                      Text(
+                        'Volunter in Human Association',
+                        textAlign: TextAlign.start,
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.white,
+                        ),
                       ),
-                    ),
-                  ],
-                ),
+                    ],
+                  ),
+                ],
               ),
             ),
             const SizedBox(height: 20),
-            // Description section
+            // Description Section
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
               child: Column(
                 children: [
                   const Text(
-                    'Women are the backbone of our societies, carrying immense strength, '
-                    'resilience, and wisdom. Despite facing numerous challenges—be it in '
-                    'the workplace, at home, or in personal struggles—women continuously '
-                    'rise above and show extraordinary courage and determination.\n\n'
-                    'Supporting women means fostering environments where they can thrive, '
-                    'feel safe, and be empowered to make their own choices. It is about '
-                    'celebrating their achievements, amplifying their voices, and ensuring '
-                    'equal opportunities in every sphere of life. When women are uplifted and supported, '
-                    'families, communities, and entire nations benefit. Believe in yourself!',
+                    'Women are the backbone of our societies, carrying immense strength, resilience, and wisdom. Despite facing numerous challenges—be it in the workplace, at home, or in personal struggles—women continuously rise above and show extraordinary courage and determination. Supporting women means fostering environments where they can thrive, feel safe, and be empowered to make their own choices. It is about celebrating their achievements, amplifying their voices, and ensuring equal opportunities in every sphere of life. When women are uplifted and supported, families, communities, and entire nations benefit. Believe in yourself!',
                     style: TextStyle(
-                      fontSize: 14,
-                      color:  Colors.black,
+                      fontSize: 16,
+                      color: Colors.black87,
                     ),
                     textAlign: TextAlign.center,
                   ),
@@ -2350,55 +2271,267 @@ class FormPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pop(context); // Goes back to the previous campaign
+                        },
                         icon: const Icon(Icons.arrow_back_ios, color: Color(0xFF9775FA)),
                       ),
                       const Text(
-                        'Bezawit',
+                        'Bezawit\'s Campaign',
                         style: TextStyle(
                           fontSize: 18,
                           color: Color(0xFF9775FA),
                         ),
                       ),
-                      IconButton(
-                        onPressed: () {},
-                        icon: Icon(Icons.arrow_forward_ios, color: Colors.purple[800]),
-                      ),
                     ],
                   ),
                   const SizedBox(height: 20),
-                  // Share Information Button
-                  Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.symmetric(vertical: 15),
-                    decoration: BoxDecoration(
-                      color: const Color(0xFF9775FA),
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    child: const Center(
-                      child: Text(
-                        'Share also your Information\nFeel free',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        textAlign: TextAlign.center,
+                  // Donate Button
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) =>  ShareStoryPage  ()),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                      backgroundColor: Colors.white,
+                      foregroundColor: const Color(0xFF9775FA),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30.0),
                       ),
+                      elevation: 5,
+                    ),
+                    child: const Text(
+                      'Share also your information',
+                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                     ),
                   ),
                 ],
               ),
             ),
             const SizedBox(height: 30),
-            // Bottom Navigation Bar
-            const BottomNavigationBarWidget(),
+            // Bottom Navigation Bar (Optional, can add if needed)
           ],
         ),
       ),
     );
   }
 }
+// share your story
+
+class ShareStoryPage extends StatefulWidget {
+  @override
+  _ShareStoryPageState createState() => _ShareStoryPageState();
+}
+
+class _ShareStoryPageState extends State<ShareStoryPage> {
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController contactController = TextEditingController();
+  final TextEditingController storyController = TextEditingController();
+  bool isAgreed = false;
+  bool isSubmitted = false;
+
+  void _submitStory() {
+    setState(() {
+      isSubmitted = true;
+    });
+
+    // Hide the submission message after 3 seconds
+    Timer(Duration(seconds: 3), () {
+      setState(() {
+        isSubmitted = false;
+      });
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
+        title: const Text(
+          'Share your story',
+          style: TextStyle(
+            color: Color(0xFF9775FA),
+            fontSize: 28,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.black),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+      ),
+      body: Stack(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'Your voice matters. Your story can help others find healing and strength.',
+                    style: TextStyle(fontSize: 16, color: Colors.black87),
+                  ),
+                  const SizedBox(height: 20),
+
+                  // Name Field
+                  const Text(
+                    'Name',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFF9775FA),
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  TextField(
+                    controller: nameController,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      hintText: 'Enter your name',
+                    ),
+                  ),
+
+                  const SizedBox(height: 20),
+
+                  // Contact Information
+                  const Text(
+                    'Contact Information',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFF9775FA),
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  TextField(
+                    controller: contactController,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      hintText: 'Enter your email or phone',
+                    ),
+                  ),
+
+                  const SizedBox(height: 20),
+
+                  // Story Field
+                  const Text(
+                    'Your Story',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFF9775FA),
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  TextField(
+                    controller: storyController,
+                    maxLines: 8,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      hintText: 'Write your story here...',
+                    ),
+                  ),
+
+                  const SizedBox(height: 20),
+
+                  // Checkbox Agreement
+                  Row(
+                    children: [
+                      Checkbox(
+                        value: isAgreed,
+                        onChanged: (bool? value) {
+                          setState(() {
+                            isAgreed = value ?? false;
+                          });
+                        },
+                      ),
+                      const Expanded(
+                        child: Text(
+                          'I agree to share my story with Her Shield and understand that it will not be shared publicly without my consent.',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Color(0xFF9775FA),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+
+                  const SizedBox(height: 20),
+
+                  // Submit Button
+                  Center(
+                    child: ElevatedButton(
+                      onPressed: isAgreed
+                          ? () {
+                              _submitStory();
+                            }
+                          : null,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Color(0xFF9775FA),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 40,
+                          vertical: 15,
+                        ),
+                      ),
+                      child: const Text(
+                        'Submit',
+                        style: TextStyle(color: Colors.white, fontSize: 18),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+
+          // Submission confirmation message
+          if (isSubmitted)
+            Align(
+              alignment: Alignment.topRight,
+              child: Container(
+                margin: EdgeInsets.only(top: 16, right: 16),
+                padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                decoration: BoxDecoration(
+                  color: Colors.green,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(Icons.check, color: Colors.white, size: 20),
+                    SizedBox(width: 8),
+                    Text(
+                      'Story submitted!',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+        ],
+      ),
+    );
+  }
+}
+
+
 
 // Bottom Navigation Bar Widget
 class BottomNavigationBarWidget extends StatelessWidget {
@@ -2451,26 +2584,30 @@ class AboutUsPage extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const Text(
-                  'About Us',
-                  style: TextStyle(
-                    fontSize: 28,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
+                const Center(
+                  child: Text(
+                    'About Us',
+                    style: TextStyle(
+                      fontSize: 32,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                      fontFamily: 'Montserrat', // Add a custom font for elegance
+                      letterSpacing: 1.2,
+                    ),
                   ),
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 24),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     ClipRRect(
                       borderRadius: BorderRadius.circular(16.0),
                       child: Image.asset(
-                        'assets/image.png', // Replace with your image asset
-                        width: 200, // Adjust width as needed
-                        height: 150, // Adjust height as needed
+                        'assets/aa.jpg', // Replace with your image asset
+                        width: 160, // Set fixed square size
+                        height: 160, // Set fixed square size
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -2482,19 +2619,21 @@ class AboutUsPage extends StatelessWidget {
                           Text(
                             'Who are we?',
                             style: TextStyle(
-                              fontSize: 20,
+                              fontSize: 24,
                               fontWeight: FontWeight.bold,
                               color: Colors.black,
+                              fontFamily: 'Montserrat', // Custom font for subheading
                             ),
                           ),
                           SizedBox(height: 8),
                           Text(
-                            'the platform is a dedicated platform developed by a team of passionate women from Bahir Dar University. ', // Add your full description text here
+                            'Our app is dedicated to empowering survivors of gender-based violence and abuse. We aim to give users a voice, offer assistance, and advocate for justice.',
                             textAlign: TextAlign.left,
                             style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.black87,
-                              
+                              fontSize: 14,
+                              color: Colors.white,
+                              fontFamily: 'Roboto', // Custom font for body text
+                              height: 1.4,
                             ),
                           ),
                         ],
@@ -2502,13 +2641,14 @@ class AboutUsPage extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 24),
                 const Text(
                   'What is our aim?',
                   style: TextStyle(
-                    fontSize: 20,
+                    fontSize: 24,
                     fontWeight: FontWeight.bold,
                     color: Colors.black,
+                    fontFamily: 'Montserrat', // Custom font for subheading
                   ),
                 ),
                 const SizedBox(height: 8),
@@ -2516,7 +2656,7 @@ class AboutUsPage extends StatelessWidget {
                   child: SingleChildScrollView(
                     child: Text(
                       '''
-Our aim is to:
+Our Aim is to:
 
 • Offer easy means for reporting for victims and witnesses of abuse.
 • Provide educational resources to raise awareness and inform the public about reporting and preventing abuse.
@@ -2524,12 +2664,41 @@ Our aim is to:
 • Advocate for stronger collaboration with authorities to ensure the safety of women and children in Ethiopia.
 
 We are more than just development practitioners, we are part of a movement.
-                      ''', // Add your full description text here
+                      ''',
                       style: TextStyle(
                         fontSize: 16,
-                        color: Colors.black87,
+                        color: Colors.white,
+                        fontFamily: 'Roboto', // Custom font for body text
+                        height: 1.5,
                       ),
                     ),
+                  ),
+                ),
+                const SizedBox(height: 24),
+                const Text(
+                  'Contact Us',
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                    fontFamily: 'Montserrat', // Custom font for subheading
+                  ),
+                ),
+                const SizedBox(height: 8),
+                const Text(
+                  'Email: techsisters@gmail.com',
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.white70,
+                    fontFamily: 'Roboto', // Custom font for body text
+                  ),
+                ),
+                const Text(
+                  'Phone: +251 965577824',
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.white70,
+                    fontFamily: 'Roboto', // Custom font for body text
                   ),
                 ),
               ],
@@ -2564,232 +2733,146 @@ We are more than just development practitioners, we are part of a movement.
   }
 }
 //petition1 page
-
-class PetitionPage extends StatelessWidget {
-  const PetitionPage({super.key});
+class petitionpage1 extends StatelessWidget {
+  const petitionpage1({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        iconTheme: const IconThemeData(color: Colors.black),
-        title: const Text(
-          'Petition Page 1',
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 20.0,
-            fontWeight: FontWeight.bold,
-          ),
+    return GestureDetector(
+      onTap: () {
+        // Navigate to the NextPage when the page is tapped
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => petitionpage2()),
+        );
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text(''),
+          backgroundColor: const Color(0xFF9775FA),
         ),
-        centerTitle: true,
-      ),
-      backgroundColor: const Color.fromARGB(255, 149, 125, 222),
-      body: SingleChildScrollView( // Wrap the body content with SingleChildScrollView
-        child: Column(
-          children: [
-            // Top image
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(15.0),
-                child: Image.asset(
-                  'assets/ass.png', // replace with your image asset path
-                  height: 200.0,
-                  width: double.infinity,
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
-            const SizedBox(height: 16.0),
-            // Petition title and description
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.published_with_changes_outlined,
-                    color: Colors.black,
-                    size: 40.0,
-                  ),
-                  SizedBox(height: 10.0),
-                  Text(
-                    'Petition',
-                    style: TextStyle(
-                      fontSize: 28.0,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                  SizedBox(height: 16.0),
-                  Text(
-                    'Protect Ethiopia’s Children and Young People from Sexual Abuse',
-                    style: TextStyle(
-                      fontSize: 18.0,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                  SizedBox(height: 16.0),
-                  Text(
-                    'Sexual abuse is a widespread issue that affects the most vulnerable members of our society—especially children and young people. In Ethiopia, many cases of sexual abuse go unreported, and survivors are often left without the support they need to heal. We must take urgent action to stop this cycle of abuse.',
-                    style: TextStyle(
-                      fontSize: 16.0,
-                      color: Colors.black54,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                  SizedBox(height: 30.0),
-                ],
-              ),
-            ),
-            // Skip arrow button
-            GestureDetector(
-              onTap: () {
-                // Navigate to the second petition page
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const PetitionPageTwo()), // Update to your second petition page
-                );
-              },
-              child: const Padding(
-                padding: EdgeInsets.symmetric(vertical: 20.0),
-                child: Column(
+        backgroundColor: const Color(0xFF9775FA),
+        body: const SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.all(10.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                // Row with Image and Title
+                Row(
                   children: [
-                    Text(
-                      'Skip',
-                      style: TextStyle(
-                        fontSize: 16.0,
-                        color: Colors.black54,
+                    Padding(
+                    padding: EdgeInsets.only(right: 8.0),
+                    child: Image(
+                      image: AssetImage('assets/img.png'), // Replace with the path to your image
+                      width: 50,
+                      height: 50,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                    // Title in the center
+                    Expanded(
+                      child: Center(
+                        child: Text(
+                          'Petition Guidelines',
+                          style: TextStyle(
+                            fontSize: 25,
+                            fontWeight: FontWeight.bold,
+                            letterSpacing: 2.0,
+                            color: Colors.white,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
                       ),
                     ),
-                    SizedBox(height: 5.0),
-                    Icon(
-                      Icons.arrow_forward,
-                      size: 30.0,
-                      color: Colors.black54,
-                    ),
                   ],
                 ),
-              ),
-            ),
-          ],
-        ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: const Color(0xFF9775FA),
-        selectedItemColor: Colors.white,
-        unselectedItemColor: Colors.white54,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.recycling),
-            label: 'Recycling',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.dashboard),
-            label: 'Dashboard',
-          ),
-        ],
-      ),
-    );
-  }
-}
-//petitionpage2
+                SizedBox(height: 19),
 
-class PetitionPageTwo extends StatelessWidget {
-  const PetitionPageTwo({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xFF9775FA),
-      appBar: AppBar(
-        backgroundColor: const Color(0xFF9775FA),
-        elevation: 0,
-        centerTitle: true,
-        title: const Text(
-          'Petition Page 2',
-          style: TextStyle(color: Colors.white),
-        ),
-      ),
-      body: Stack(
-        children: [
-          // Background image
-          Positioned.fill(
-            child: Image.asset(
-              'assets/wom.png', // Replace with your background image path
-              fit: BoxFit.cover,
-            ),
-          ),
-          // Gradient overlay
-          Positioned.fill(
-            child: Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    const Color(0xFF9775FA).withOpacity(0.8),  // Top purple color with transparency
-                    const Color.fromARGB(255, 155, 140, 199).withOpacity(0.8), // Faded purple with transparency
-                  ],
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                ),
-              ),
-            ),
-          ),
-          // Content on top of the background and gradient
-          Column(
-            children: [
-              const Spacer(),
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Image.asset(
-                  'assets/img.png', // Replace with the actual image path
-                  height: 150.0,
-                  fit: BoxFit.cover,
-                ),
-              ),
-              const SizedBox(height: 16.0), // Space between the image and text
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.0),
-                child: Text(
-                  '''We, the undersigned, call upon the Ethiopian government, educational institutions, and law enforcement to:
-
-1. Strengthen legal processes for survivors of sexual abuse.
-2. Provide adequate funding for mental health services.
-3. Launch educational campaigns on abuse prevention.
-4. Create safe reporting mechanisms.''',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 16.0,
-                    height: 1.5,
+                // Intro to the rules (centered)
+                Center(
+                  child: Text(
+                    'To keep our community supportive and impactful, we ask that you follow these guidelines when creating or signing petitions:',
+                    style: TextStyle(fontSize: 15, color: Colors.white),
+                    textAlign: TextAlign.center,
                   ),
-                  textAlign: TextAlign.center,
                 ),
-              ),
-              const Spacer(),
-            ],
+                SizedBox(height: 19),
+
+                // First guideline with bolded first word
+                Text.rich(
+                  TextSpan(
+                    children: [
+                      TextSpan(
+                        text: '1. Truthfulness and Respect: ',
+                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
+                      ),
+                      TextSpan(
+                        text: 'Please ensure all information is accurate and respectful. Petitions are intended to drive real change, so honest, thoughtful contributions make a big difference.',
+                        style: TextStyle(fontSize: 15, color: Colors.white),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 19),
+
+                // Second guideline with bolded first word
+                Text.rich(
+                  TextSpan(
+                    children: [
+                      TextSpan(
+                        text: '2. Focus on Positive Change: ',
+                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
+                      ),
+                      TextSpan(
+                        text: 'Our petition platform is for promoting safety, justice, and well-being. Petitions should support causes that align with our mission of protecting individuals and promoting equity.',
+                        style: TextStyle(fontSize: 15, color: Colors.white),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 19),
+                
+                // Third guideline with bolded first word
+                Text.rich(
+                  TextSpan(
+                    children: [
+                      TextSpan(
+                        text: '3. No Misuse: ',
+                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
+                      ),
+                      TextSpan(
+                        text: 'Petitions with false claims or those that violate our terms may be removed to maintain a safe and credible space for everyone.',
+                        style: TextStyle(fontSize: 15, color: Colors.white),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 24),
+
+                // Final paragraph (centered)
+                Center(
+                  child: Text(
+                    'By participating in this petition platform, you agree to these guidelines and support our commitment to positive, meaningful impact.',
+                    style: TextStyle(fontSize: 16, color: Colors.white),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ],
+            ),
           ),
-        ],
-      ),
-      bottomNavigationBar: BottomNavigationBar(
+        ),
+       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.white,
         selectedItemColor: const Color(0xFF9775FA),
         unselectedItemColor: Colors.black,
         currentIndex: 0, // This can be used to highlight the selected tab
         onTap: (index) {
           if (index == 2) {
-            // When the arrow forward is tapped, navigate to PetitionPageThree
+            // When the arrow forward is tapped, navigate to PetitionPage2
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => const PetitionPageThree()),
+              MaterialPageRoute(builder: (context) => const petitionpage2()),
             );
           }
         },
@@ -2808,192 +2891,565 @@ class PetitionPageTwo extends StatelessWidget {
           ),
         ],
       ),
+    ),
     );
   }
 }
+      
+  
+//petitionpage2
 
 
-//petition3
-class PetitionPageThree extends StatelessWidget {
-  const PetitionPageThree({super.key});
+class petitionpage2 extends StatelessWidget {
+  const petitionpage2({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF9775FA),
-      body: Stack(
-        children: [
-          SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  const SizedBox(height: 40.0),
-                  // Top Image or Icon
-                  const Align(
-                    alignment: Alignment.topCenter,
-                    child: Icon(
-                      Icons.person_outline, // Replace with your image if needed
-                      size: 100.0,
-                      color: Colors.white,
-                    ),
-                  ),
-                  const SizedBox(height: 20.0),
-                  // Petition Title and Text
-                  const Text(
-                    'By signing this petition, you are supporting a movement to protect Ethiopia’s children and young people from the trauma of sexual abuse. Together, we can build a safer, more supportive society where no child has to suffer in silence.',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16.0,
-                      height: 1.5,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(height: 40.0),
-                  const Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      'Petition',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20.0,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      textAlign: TextAlign.left,
-                    ),
-                  ),
-                  const SizedBox(height: 20.0),
-                  // Petition Form (Full Name, Email, Feedback)
-                  const TextField(
-                    decoration: InputDecoration(
-                      labelText: 'Full Name',
-                      labelStyle: TextStyle(color: Colors.white),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white),
-                      ),
-                    ),
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  const SizedBox(height: 20.0),
-                  const TextField(
-                    decoration: InputDecoration(
-                      labelText: 'Email',
-                      labelStyle: TextStyle(color: Colors.white),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white),
-                      ),
-                    ),
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  const SizedBox(height: 20.0),
-                  const TextField(
-                    maxLines: 3,
-                    decoration: InputDecoration(
-                      labelText: 'Feedback',
-                      labelStyle: TextStyle(color: Colors.white),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white),
-                      ),
-                    ),
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  const SizedBox(height: 30.0),
-                  // Sign the Petition Button
-                  SizedBox(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        iconTheme: const IconThemeData(color: Colors.black),
+        title: const Text(
+          'Petition',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 24.0,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        centerTitle: true,
+      ),
+      backgroundColor: const Color.fromARGB(255, 149, 125, 222),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            // Top image with shadow and rounded corners
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(15.0),
+                child: Material(
+                  elevation: 8.0,
+                  shadowColor: Colors.black.withOpacity(0.3),
+                  child: Image.asset(
+                    'assets/girl.jpg', // Your image path
+                    height: 200.0,
                     width: double.infinity,
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white, // Button color
-                        foregroundColor: const Color(0xFF9775FA), // Text color
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
-                      ),
-                      child: const Padding(
-                        padding: EdgeInsets.all(14.0),
-                        child: Text(
-                          'Sign the Petition',
-                          style: TextStyle(
-                            color: Color(0xFF9775FA),
-                            fontSize: 16.0,
-                          ),
-                        ),
-                      ),
-                    ),
+                    fit: BoxFit.cover,
                   ),
-                  const SizedBox(height: 20.0),
-                  // Skip Text and Dots Indicator
-                  const Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Skip',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      Icon(
-                        Icons.circle,
-                        size: 10.0,
-                        color: Colors.white70,
-                      ),
-                      Icon(
-                        Icons.circle,
-                        size: 10.0,
-                        color: Colors.white,
-                      ),
-                      Icon(
-                        Icons.circle,
-                        size: 10.0,
-                        color: Colors.white70,
-                      ),
-                      Icon(
-                        Icons.arrow_forward,
-                        size: 24.0,
-                        color: Colors.white,
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 40.0),
-                ],
+                ),
               ),
             ),
-          ),
-        ],
-      ),
-      // Bottom Navigation Bar
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.white,
-        selectedItemColor: const Color(0xFF9775FA),
-        unselectedItemColor: Colors.black,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.warning),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.arrow_forward),
-            label: '',
-          ),
-        ],
+            const SizedBox(height: 20.0),
+            
+            // Main content with rounded card-like sections
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: Material(
+                elevation: 4.0,
+                borderRadius: BorderRadius.circular(15.0),
+                color: Colors.white.withOpacity(0.9),
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.verified_user_outlined,
+                        color: Colors.purple,
+                        size: 50.0,
+                      ),
+                      const SizedBox(height: 12.0),
+                      Text(
+                        'Verified Petition Campaign',
+                        style: TextStyle(
+                          fontSize: 28.0,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(height: 16.0),
+                      Text(
+                        'First, read the verified Petition list of individuals and causes that need support and ensure your contributions make a direct impact.',
+                        style: TextStyle(
+                          fontSize: 18.0,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black87,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(height: 16.0),
+                      Text(
+                        'With your support, we can make a difference. Every voice helps bring us closer to our mission. Thank you for standing with us!',
+                        style: TextStyle(
+                          fontSize: 16.0,
+                          color: Colors.black54,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(height: 30.0),
+                    ],
+                  ),
+           ),
+              ),
+            ),
+            
+            const SizedBox(height: 30.0),
+            // Donation button with hover effect (subtle animation)
+            ElevatedButton(
+              onPressed: () {
+                // Navigate to another page
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const storypage()),
+                );
+              },
+              style: ElevatedButton.styleFrom(
+                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                backgroundColor: Colors.white,
+                foregroundColor: const Color(0xFF9775FA),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30.0),
+                ),
+                elevation: 8,
+                shadowColor: Colors.black.withOpacity(0.2),
+              ),
+              child: const Text(
+                'Sign Now',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            const SizedBox(height: 40.0),
+          ],
+        ),
       ),
     );
   }
 }
-//report page1
+class storypage extends StatelessWidget {
+  const storypage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Petition Campaign'),
+        backgroundColor: const Color(0xFF9775FA),
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            // Top Purple Section with Image and Text Side by Side
+            Container(
+              decoration: const BoxDecoration(
+                color: Color(0xFF9775FA),
+                borderRadius: BorderRadius.vertical(bottom: Radius.circular(30)),
+              ),
+              padding: const EdgeInsets.all(20.0),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  // Circular Image
+                  CircleAvatar(
+                    radius: 60,
+                    backgroundImage: AssetImage('assets/prowomen.png'),
+                  ),
+                  const SizedBox(width: 20),
+                  // Text Info Next to the Image
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Heben Dereja',
+                        style: TextStyle(
+                          fontSize: 26,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        '7 years old',
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Colors.white,
+                        ),
+                      ),
+                      const SizedBox(height: 6),
+                      Text(
+                        'Victm',
+                        textAlign: TextAlign.start,
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 20),
+            // Description Section
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: Column(
+                children: [
+                  const Text(
+                    'Hello,  my name is Heben Dereje and i was only 7 years old when i was raped and killed by a man which i assume as a Dad. my killer was my neighbor and the owner of the house. he has 3 kids and one of the kid is the same as my age. I t was happened in 25/12/2015 e.c there was none in the house except me, my sister, my aunt and himself. his wife and his kids aren’t there. i was studying and i want to go to toilet and i told my aunt that and went but when i returned he called me and i thought there are his kids and went in but after i get in everything change and he chocked and put sand on my mouth for me not to breath and raped by both organ and killed me.',
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.black87,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 20),
+                  // Left/Right Arrow Buttons
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      IconButton(
+                        onPressed: () {
+                          Navigator.pop(context); // Goes back to the previous campaign
+                        },
+                        icon: const Icon(Icons.arrow_back_ios, color: Color(0xFF9775FA)),
+                      ),
+                      const Text(
+                        'Heben\'s Campaign',
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Color(0xFF9775FA),
+                        ),
+                      ),
+                      IconButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => const storypage1()),
+                          );
+                        },
+                        icon: const Icon(Icons.arrow_forward_ios, color: Colors.purple),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+                  // Donate Button
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const PetitionPage3()),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                      backgroundColor: Colors.white,
+                      foregroundColor: const Color(0xFF9775FA),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30.0),
+                      ),
+                      elevation: 5,
+                    ),
+                    child: const Text(
+                      'Sign To Me !',
+                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 30),
+            // Bottom Navigation Bar (Optional, can add if needed)
+          ],
+        ),
+      ),
+    );
+  }
+}
+// Next Campaign Page
+class storypage1 extends StatelessWidget {
+  const storypage1({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Petition Campaign'),
+        backgroundColor: const Color(0xFF9775FA),
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            // Top Purple Section with Image and Text Side by Side
+            Container(
+              decoration: const BoxDecoration(
+                color: Color(0xFF9775FA),
+                borderRadius: BorderRadius.vertical(bottom: Radius.circular(30)),
+              ),
+              padding: const EdgeInsets.all(20.0),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  // Circular Image
+                  CircleAvatar(
+                    radius: 60,
+                    backgroundImage: AssetImage('assets/prowomen.png'),
+                  ),
+                  const SizedBox(width: 20),
+                  // Text Info Next to the Image
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Jemila',
+                        style: TextStyle(
+                          fontSize: 26,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        '12 years old',
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Colors.white,
+                        ),
+                      ),
+                      const SizedBox(height: 6),
+                      Text(
+                        'Victm',
+                        textAlign: TextAlign.start,
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 20),
+            // Description Section
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: Column(
+                children: [
+                  const Text(
+                    'Hello,  my name is jemile and i was only 12 years old when i was raped and killed by a man which i assume as a Dad. my killer was my neighbor and the owner of the house. he has 3 kids and one of the kid is the same as my age. I t was happened in 25/12/2015 e.c there was none in the house except me, my sister, my aunt and himself. his wife and his kids aren’t there. i was studying and i want to go to toilet and i told my aunt that and went but when i returned he called me and i thought there are his kids and went in but after i get in everything change and he chocked and put sand on my mouth for me not to breath and raped by both organ and killed me.',
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.black87,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 20),
+                  // Left/Right Arrow Buttons
+                  const SizedBox(height: 20),
+                  // Donate Button
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const PetitionPage3 ()),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                      backgroundColor: Colors.white,
+                      foregroundColor: const Color(0xFF9775FA),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30.0),
+                      ),
+                      elevation: 5,
+                    ),
+                    child: const Text(
+                      'Sign To Me !',
+                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 30),
+            // Bottom Navigation Bar (Optional, can add if needed)
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+//petition3
+
+class PetitionPage3 extends StatelessWidget {
+  const PetitionPage3({super.key});
+
+  void _showSuccessMessage(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Signed!😊"),
+          content: const Text("You signed successfully!"),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+              },
+              child: const Text("OK"),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Stack(
+        children: [
+          // Background image
+          Container(
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/wom.png'), // Add your image to assets
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          // Purple overlay
+          Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  const Color.fromARGB(255, 151, 117, 250).withOpacity(0.5), // Light purple overlay
+                  const Color.fromARGB(255, 151, 117, 250).withOpacity(0.7), // Darker purple towards bottom
+                ],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+              ),
+            ),
+          ),
+          // Back Arrow at the Top Left
+          Positioned(
+            top: 40, // Position from the top
+            left: 20, // Position from the left
+            child: IconButton(
+              icon: const Icon(Icons.arrow_back, color: Colors.black),
+              onPressed: () {
+                Navigator.of(context).pop(); // Navigate to the previous page
+              },
+            ),
+          ),
+          // Content
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 30),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const SizedBox(height: 8), // Space below the back arrow
+                // Logo/Icon at the top
+                const Icon(
+                  Icons.person,
+                  color: Colors.white,
+                  size: 80,
+                ),
+                const SizedBox(height: 50),
+                // Full Name field
+                TextField(
+                  decoration: InputDecoration(
+                    hintText: 'Full Name',
+                    hintStyle: const TextStyle(color: Colors.white),
+                    filled: true,
+                    fillColor: Colors.white.withOpacity(0.2),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide.none,
+                    ),
+                  ),
+                  style: const TextStyle(color: Colors.white),
+                ),
+                const SizedBox(height: 20),
+                // Email field
+                TextField(
+                  decoration: InputDecoration(
+                    hintText: 'Email',
+                    hintStyle: const TextStyle(color: Colors.white),
+                    filled: true,
+                    fillColor: Colors.white.withOpacity(0.2),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide.none,
+                    ),
+                  ),
+                  style: const TextStyle(color: Colors.white),
+                ),
+                const SizedBox(height: 20),
+                // Sign the Petition button
+                ElevatedButton(
+                  onPressed: () {
+                    // Show success message
+                    _showSuccessMessage(context);
+                  },
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                    backgroundColor: Colors.white,
+                    foregroundColor: Colors.purple,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  child: const Text(
+                    'Sign the Petition',
+                    style: TextStyle(fontSize: 16),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+      // Custom Bottom Navigation Bar
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.white,
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.warning, color: Colors.purple),
+            label: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person, color: Colors.purple),
+            label: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home, color: Colors.purple),
+            label: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.people, color: Colors.purple),
+            label: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.chat, color: Colors.purple),
+            label: '',
+          ),
+        ],
+        selectedItemColor: Colors.purple,
+        unselectedItemColor: Colors.grey,
+      ),
+    );
+  }
+}
+
+//report page
 
 class ReportPage extends StatelessWidget {
   const ReportPage({super.key});
@@ -3122,7 +3578,7 @@ class ReportPage extends StatelessWidget {
                 // Navigate to HomePage
                  Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => const PetitionPage()),
+                          MaterialPageRoute(builder: (context) => const petitionpage1()),
                         );
               },
             ),
@@ -3384,7 +3840,7 @@ class NextPage extends StatelessWidget {
                 // Navigate to HomePage
                  Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => const PetitionPage()),
+                          MaterialPageRoute(builder: (context) => const petitionpage1()),
                         );
               },
             ),
@@ -3563,7 +4019,7 @@ class Report3 extends StatelessWidget {
                 // Navigate to HomePage
                  Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => const PetitionPage()),
+                          MaterialPageRoute(builder: (context) => const petitionpage1()),
                         );
               },
             ),
@@ -3768,7 +4224,7 @@ class Report4 extends StatelessWidget {
                 // Navigate to HomePage
                  Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => const PetitionPage()),
+                          MaterialPageRoute(builder: (context) => const petitionpage1()),
                         );
               },
             ),
@@ -3827,20 +4283,6 @@ class Report5 extends StatelessWidget {
               maxLines: 4,
             ),
             const SizedBox(height: 16),
-            // DropdownButtonFormField<String>(
-            //   items: const [
-            //     DropdownMenuItem(value: 'Bald', child: Text('Bald')),
-            //     DropdownMenuItem(value: 'Black', child: Text('Black')),
-            //     DropdownMenuItem(value: 'Blonde', child: Text('Blonde')),
-            //     DropdownMenuItem(value: 'Brown', child: Text('Brown')),
-            //   ],
-            //   onChanged: (value) {},
-            //   decoration: const InputDecoration(
-            //     border: OutlineInputBorder(),
-            //   ),
-            // ),
-            // const SizedBox(height: 16),
-            // Modified "Noticeable Mark" text to purple
              const Text(
     'Would you like help gathering evidence (medical,legal advice):',
     style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xFF9775FA)),
@@ -3974,7 +4416,7 @@ class Report5 extends StatelessWidget {
                 // Navigate to HomePage
                  Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => const PetitionPage()),
+                          MaterialPageRoute(builder: (context) => const petitionpage1()),
                         );
               },
             ),
@@ -4168,7 +4610,7 @@ class _SuccessPaeState extends State<SuccessPae> {
                 // Navigate to HomePage
                  Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => const PetitionPage()),
+                          MaterialPageRoute(builder: (context) => const petitionpage1()),
                         );
               },
             ),
@@ -4190,7 +4632,6 @@ class _SuccessPaeState extends State<SuccessPae> {
     );
   }
 }
-//gofundme
 class GoFundMePage extends StatelessWidget {
   const GoFundMePage({super.key});
 
@@ -4200,7 +4641,7 @@ class GoFundMePage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        iconTheme: const IconThemeData(color: Colors.white),
+        iconTheme: const IconThemeData(color: Colors.black),
         title: const Text(
           'GoFundMe',
           style: TextStyle(
@@ -4224,7 +4665,7 @@ class GoFundMePage extends StatelessWidget {
                   elevation: 8.0,
                   shadowColor: Colors.black.withOpacity(0.3),
                   child: Image.asset(
-                    'assets/lll.jpg', // Your image path
+                    'assets/ggg.jpg', // Your image path
                     height: 200.0,
                     width: double.infinity,
                     fit: BoxFit.cover,
@@ -4263,7 +4704,7 @@ class GoFundMePage extends StatelessWidget {
                       ),
                       SizedBox(height: 16.0),
                       Text(
-                        'First, read the verified GoFundMe list of individuals and causes that need funding and ensure your contributions make a direct impact.',
+                        'First, read the verified GoFundMe list of individuals and causes that need funding and ensure your contributions make a direct impact. It is verified by Women and Human right Association',
                         style: TextStyle(
                           fontSize: 18.0,
                           fontWeight: FontWeight.bold,
@@ -4437,7 +4878,7 @@ class GoFundMePage2 extends StatelessWidget {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => const GoFundMePage3()),
+                        MaterialPageRoute(builder: (context) => const GoFundMe3Page()),
                       );
                     },
                     style: ElevatedButton.styleFrom(
@@ -4574,41 +5015,49 @@ class GoFundMePage3 extends StatelessWidget {
 }
 
 
-
 class GoFundMe3Page extends StatelessWidget {
   const GoFundMe3Page({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF9775FA), // Background color from the design
-      resizeToAvoidBottomInset: true, // Prevent bottom overflow when keyboard appears
-      body: SingleChildScrollView( // Allows the screen to scroll if the content overflows
+      backgroundColor: const Color(0xFF9775FA),
+      resizeToAvoidBottomInset: true,
+      appBar: AppBar(
+        backgroundColor: const Color(0xFF9775FA),
+        elevation: 0,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.black),
+          onPressed: () {
+            Navigator.pop(context); // Navigate back to the previous page
+          },
+        ),
+      ),
+      body: SingleChildScrollView(
         child: ConstrainedBox(
           constraints: BoxConstraints(
-            minHeight: MediaQuery.of(context).size.height, // Ensure content fills the screen height
+            minHeight: MediaQuery.of(context).size.height,
           ),
           child: IntrinsicHeight(
             child: Padding(
-              padding: const EdgeInsets.all(20.0), // Padding around the page
+              padding: const EdgeInsets.all(20.0),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start, // Align content to the left
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Spacer(), // Pushes content towards the bottom
-
+                  const Spacer(),
                   const Text(
                     'DONATE',
                     style: TextStyle(
                       fontSize: 32.0,
                       fontWeight: FontWeight.bold,
-                      color: Colors.white, // Bold white text
+                      color: Colors.white,
                     ),
                   ),
-                  const SizedBox(height: 20.0), // Spacing between the title and fields
+                  const SizedBox(height: 20.0),
                   // Full Name TextField
                   SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.8, // Set width to 80% of screen
-                    height: 50.0, // Set height of the TextField
+                    width: MediaQuery.of(context).size.width * 0.8,
+                    height: 50.0,
                     child: TextField(
                       decoration: InputDecoration(
                         labelText: 'Full Name',
@@ -4622,15 +5071,16 @@ class GoFundMe3Page extends StatelessWidget {
                           borderSide: const BorderSide(color: Colors.white),
                         ),
                         filled: true,
-                        fillColor: const Color(0xFF9775FA), // Purple background for the input
+                        fillColor: const Color(0xFF9775FA),
                         contentPadding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
                       ),
                     ),
                   ),
                   const SizedBox(height: 20.0),
+                  // Payment Method TextField
                   SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.8, // Set width to 80% of screen
-                    height: 50.0, // Set height of the TextField
+                    width: MediaQuery.of(context).size.width * 0.8,
+                    height: 50.0,
                     child: TextField(
                       decoration: InputDecoration(
                         labelText: 'Payment Method',
@@ -4644,17 +5094,16 @@ class GoFundMe3Page extends StatelessWidget {
                           borderSide: const BorderSide(color: Colors.white),
                         ),
                         filled: true,
-                        fillColor: const Color(0xFF9775FA), // Purple background for the input
+                        fillColor: const Color(0xFF9775FA),
                         contentPadding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
                       ),
                     ),
                   ),
                   const SizedBox(height: 20.0),
-
-                  // Email TextField
+                  // Account TextField
                   SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.8, // Set width to 80% of screen
-                    height: 50.0, // Set height of the TextField
+                    width: MediaQuery.of(context).size.width * 0.8,
+                    height: 50.0,
                     child: TextField(
                       decoration: InputDecoration(
                         labelText: 'Account',
@@ -4668,16 +5117,16 @@ class GoFundMe3Page extends StatelessWidget {
                           borderSide: const BorderSide(color: Colors.white),
                         ),
                         filled: true,
-                        fillColor: const Color(0xFF9775FA), // Purple background for the input
+                        fillColor: const Color(0xFF9775FA),
                         contentPadding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
                       ),
                     ),
                   ),
                   const SizedBox(height: 20.0),
-                  // Story TextField (New field to capture user's story)
-              SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.8, // Set width to 80% of screen
-                    height: 50.0, // Set height of the TextField
+                  // Amount TextField
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.8,
+                    height: 50.0,
                     child: TextField(
                       decoration: InputDecoration(
                         labelText: 'Amount',
@@ -4691,40 +5140,39 @@ class GoFundMe3Page extends StatelessWidget {
                           borderSide: const BorderSide(color: Colors.white),
                         ),
                         filled: true,
-                        fillColor: const Color(0xFF9775FA), // Purple background for the input
+                        fillColor: const Color(0xFF9775FA),
                         contentPadding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
                       ),
                     ),
                   ),
                   const SizedBox(height: 20.0),
-                  // Register Button
+                  // Donate Button
                   SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.4, // Set width to 40% of screen
-                    height: 40.0, // Set button height
+                    width: MediaQuery.of(context).size.width * 0.4,
+                    height: 40.0,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white, // Button background color
-                        foregroundColor: Colors.black, // Button text color
+                        backgroundColor: Colors.white,
+                        foregroundColor: Colors.black,
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(50.0), // Rounded button edges
+                          borderRadius: BorderRadius.circular(50.0),
                         ),
                       ),
                       onPressed: () {
-                        _showRegistrationMessage(context); // Show success message on click
+                        _showRegistrationMessage(context);
                       },
                       child: const Text(
                         'Donate',
                         style: TextStyle(
-                          fontWeight: FontWeight.bold, // Bold text
+                          fontWeight: FontWeight.bold,
                           fontSize: 16.0,
-                          color: Colors.black, // Text color
+                          color: Colors.black,
                         ),
                       ),
                     ),
                   ),
-                  const SizedBox(height: 20.0), // Spacing below the button
-
-                  const Spacer(), // Spacer at the bottom
+                  const SizedBox(height: 20.0),
+                  const Spacer(),
                 ],
               ),
             ),
@@ -4733,6 +5181,7 @@ class GoFundMe3Page extends StatelessWidget {
       ),
     );
   }
+
   // Method to show the story sharing success message
   void _showRegistrationMessage(BuildContext context) {
     final overlay = Overlay.of(context);
@@ -4745,25 +5194,25 @@ class GoFundMe3Page extends StatelessWidget {
           child: Container(
             padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
             decoration: BoxDecoration(
-              color: Colors.green, // Success message background color
+              color: Colors.green,
               borderRadius: BorderRadius.circular(10.0),
               boxShadow: const [
                 BoxShadow(
                   color: Colors.black26,
                   blurRadius: 6.0,
-                  offset: Offset(2, 2), // Shadow effect
+                  offset: Offset(2, 2),
                 ),
               ],
             ),
             child: const Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Icon(Icons.check_circle, color: Colors.white), // Check icon
+                Icon(Icons.check_circle, color: Colors.white),
                 SizedBox(width: 10.0),
                 Text(
-                  'Your Have Sucssesfully Donated Thanks!',
+                  'You have successfully donated! Thanks!',
                   style: TextStyle(
-                    color: Colors.white, // White text
+                    color: Colors.white,
                     fontSize: 16.0,
                     fontWeight: FontWeight.bold,
                   ),
@@ -4775,12 +5224,12 @@ class GoFundMe3Page extends StatelessWidget {
       ),
     );
 
-    overlay.insert(overlayEntry); // Show the message
+    overlay.insert(overlayEntry);
 
     // Remove the message after 3 seconds
     Future.delayed(const Duration(seconds: 3), () {
       overlayEntry.remove();
-      Navigator.pop(context); // Navigate back to the previous page after success
+      Navigator.pop(context);
     });
   }
 }
