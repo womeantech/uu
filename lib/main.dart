@@ -4043,7 +4043,7 @@ class _SuccessPaeState extends State<SuccessPae> {
 
             // Radio button options for choosing one of three options
             const Text(
-              'Would you like this report to be shared publicly for awareness or feedback:',
+              'Would you prefer this report to be shared publicly for awareness or feedback:',
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xFF9775FA)),
             ),
             const SizedBox(height: 8),
