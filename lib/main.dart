@@ -3084,6 +3084,37 @@ class ReportPage extends StatelessWidget {
           ),
         ),
       ),
+      bottomNavigationBar: BottomAppBar(
+        shape: const CircularNotchedRectangle(),
+        notchMargin: 8.0,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            IconButton(
+              icon: const Icon(Icons.warning_amber_outlined),
+              onPressed: () {},
+            ),
+            IconButton(
+              icon: const Icon(Icons.home),
+              onPressed: () {},
+            ),
+            IconButton(
+              icon: const Icon(Icons.report_gmailerrorred),
+              onPressed: () {},
+            ),
+            IconButton(
+              icon: const Icon(Icons.info_outline),
+              onPressed: () {},
+            ),
+          ],
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        backgroundColor: const Color.fromARGB(255, 232, 226, 182),
+        child: const Icon(Icons.home),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 }
@@ -3144,7 +3175,6 @@ class _SignatureInputState extends State<SignatureInput> {
 }
 
 //reportpage2
-
 class NextPage extends StatelessWidget {
   const NextPage({super.key});
 
@@ -3281,12 +3311,12 @@ class NextPage extends StatelessWidget {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => Report3()), // Replace with the actual page
+                    MaterialPageRoute(builder: (context) => const Report3()), // Replace with the actual page
                   );
                 },
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                  backgroundColor: Color(0xFF9775FA),
+                  backgroundColor: const Color(0xFF9775FA),
                 ),
                 child: const Text(
                   'Next',
@@ -3297,12 +3327,45 @@ class NextPage extends StatelessWidget {
           ),
         ],
       ),
+      bottomNavigationBar: BottomAppBar(
+        shape: const CircularNotchedRectangle(),
+        notchMargin: 8.0,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            IconButton(
+              icon: const Icon(Icons.warning_amber_outlined),
+              onPressed: () {},
+            ),
+            IconButton(
+              icon: const Icon(Icons.home),
+              onPressed: () {},
+            ),
+            IconButton(
+              icon: const Icon(Icons.report_gmailerrorred),
+              onPressed: () {},
+            ),
+            IconButton(
+              icon: const Icon(Icons.info_outline),
+              onPressed: () {},
+            ),
+          ],
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        backgroundColor: const Color.fromARGB(255, 232, 226, 182),
+        child: const Icon(Icons.home),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 }
 
 
+
 //report page3
+
 class Report3 extends StatelessWidget {
   const Report3({super.key});
 
@@ -3310,137 +3373,335 @@ class Report3 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(''),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.black),
+          onPressed: () {
+    Navigator.pop(context); // This will navigate back to the previous page
+  },
+        ),
       ),
-      body: Stack(
-        children: [
-          const SingleChildScrollView(
-            padding: EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Main introductory paragraph
-                Text(
-                  'Reporting Guidelines and Agreement',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Location of Incident
+              const Text(
+                'Location of Incident:',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xFF9775FA)),
+              ),
+              const SizedBox(height: 16),
+              const TextField(
+                maxLines: 5,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: 'Street name / Landmark / House / Specific place where the incident happened / Unknown',
                 ),
-                SizedBox(height: 16), // Spacing between paragraphs
-                
-                // Intro to the rules
-                Text(
-                  'Be careful as you proceed, please read the guidelines before continuing.',
-                  style: TextStyle(fontSize: 14),
+              ),
+              const SizedBox(height: 20),
+
+              // Did you know the person/s involved?
+              const Text(
+                'Did you know the person/s who is involved:',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xFF9775FA)),
+              ),
+              const Row(
+                children: [
+                  Row(
+                    children: [
+                      Checkbox(value: false, onChanged: null),
+                      Text('Yes'),
+                    ],
+                  ),
+                  SizedBox(height: 20),
+                  Row(
+                    children: [
+                      Checkbox(value: false, onChanged: null),
+                      Text('No'),
+                    ],
+                  ),
+                ],
+              ),
+              const SizedBox(height: 30),
+
+              // If Yes - Relationship
+              const Text(
+                'If Yes:',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xFF9775FA)),
+              ),
+              const SizedBox(height: 20),
+              const TextField(
+                maxLines: 4,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: 'Any Relatives / Father / specify the relation with you',
                 ),
-                SizedBox(height: 12),
-                
-                // Guidelines
-                Text(
-                  '1. Truthfulness: Be as detailed as possible when describing the situation. Provide specific information to help professionals understand the issue better.',
-                  style: TextStyle(fontSize: 18),
+              ),
+              const SizedBox(height: 20),
+
+              // Number of people involved
+              const Text(
+                'Number of people involved:',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xFF9775FA)),
+              ),
+              const SizedBox(height: 16),
+              DropdownButtonFormField<String>(
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
                 ),
-                SizedBox(height: 12),
-                
-                Text(
-                  '2. Respect for All Parties: Avoid using offensive language or false information. Our goal is to maintain a safe space for everyone, and accurate reporting helps us achieve that.',
-                  style: TextStyle(fontSize: 18),
+                items: ['Unknown', '1', '2', '3', '4', '5+'].map((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
+                onChanged: (String? newValue) {},
+                hint: const Text('Unknown'),
+              ),
+              const SizedBox(height: 30),
+
+              // Next button
+              Align(
+                alignment: Alignment.bottomRight,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFF9775FA),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                  ),
+                   onPressed: () {
+                  // Navigate to the next page
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const Report4()),
+                  );
+                },
+                  child: const Text('Next'),
                 ),
-                SizedBox(height: 12),
-                
-                Text(
-                  '3. Privacy and Confidentiality: Respect the privacy of others. Do not share personal information about others unless it is necessary for the report.',
-                  style: TextStyle(fontSize: 18),
-                ),
-                SizedBox(height: 12),
-                
-                Text(
-                  '4. Openness: If you are uncertain about any information, mention that in your report. Being honest and transparent helps us understand the situation better.',
-                  style: TextStyle(fontSize: 18),
-                ),
-                SizedBox(height: 24),
-                
-                // Final paragraph
-                Text(
-                  'By signing this petition, you agree to the terms and conditions outlined in our agreement. This helps us to create a safe, trustworthy platform for everyone.',
-                  style: TextStyle(fontSize: 16),
-                ),
-                SizedBox(height: 30), // Space before the next section
-              ],
-            ),
+              ),
+            ],
           ),
-          
-          // Next button positioned at the bottom right
-          Positioned(
-            bottom: 16,
-            right: 16,
-            child: ElevatedButton(
-              onPressed: () {
-                // Navigate to the next page when the button is pressed
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const SuccessPage()),
-                );
-              },
-              child: const Text('Next'),
-            ),
-          ),
-        ],
+        ),
       ),
+      bottomNavigationBar: BottomAppBar(
+        shape: const CircularNotchedRectangle(),
+        notchMargin: 8.0,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            IconButton(
+              icon: const Icon(Icons.warning_amber_outlined),
+              onPressed: () {},
+            ),
+            IconButton(
+              icon: const Icon(Icons.home),
+              onPressed: () {},
+            ),
+            IconButton(
+              icon: const Icon(Icons.report_gmailerrorred),
+              onPressed: () {},
+            ),
+            IconButton(
+              icon: const Icon(Icons.info_outline),
+              onPressed: () {},
+            ),
+          ],
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        backgroundColor: const Color.fromARGB(255, 232, 226, 182),
+        child: const Icon(Icons.home),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 }
 
 
   // report4
-class SuccessPage extends StatelessWidget {
-  const SuccessPage({super.key});
+
+class Report4 extends StatelessWidget {
+  const Report4({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // Display the success message after the page loads
-    Future.delayed(Duration.zero, () {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Successfully completed')),
-      );
-    });
-
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Success Page'),
-        backgroundColor: Colors.purple[700],
+        title: const Text(''),
       ),
-      body: Stack(
-        children: [
-          Center(
-            child: Text(
-              'Welcome to the Success Page!',
-              style: TextStyle(fontSize: 24, color: Colors.purple[700]),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              'Was the perpetrator carrying a weapon',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold,color:Color(0xFF9775FA)),
             ),
-          ),
-          
-          // Next button positioned at the bottom right
-          Positioned(
-            bottom: 16,
-            right: 16,
-            child: ElevatedButton(
-              onPressed: () {
-                // Navigate to the next page when the button is pressed
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const SuccessPge()), // Replace NextPage with the desired page
-                );
-              },
-              child: const Text('Next'),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.purple[700],
+            const SizedBox(height: 8),
+            const TextField(
+              decoration: InputDecoration(
+                hintText: 'Yes / NO / Not sure\nspecify the weapon',
+                border: OutlineInputBorder(),
+              ),
+              maxLines: 2,
+            ),
+            const SizedBox(height: 16),
+            const Text(
+              'The perpetrator Description',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold,color:Color(0xFF9775FA)),
+            ),
+            const SizedBox(height: 12),
+            const Text(
+              'Physical Features:',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold,color:Color(0xFF9775FA)),
+            ),
+            const SizedBox(height: 8),
+            const Text(
+              'Height:',
+              style: TextStyle(fontSize: 16,color:Color(0xFF9775FA)),
+            ),
+            const SizedBox(height: 8),
+            const TextField(
+              decoration: InputDecoration(
+                hintText: '',
+                border: OutlineInputBorder(),
               ),
             ),
-          ),
-        ],
+            const SizedBox(height: 16),
+            const Text(
+              'Hair Color:',
+              style: TextStyle(fontSize: 16,color:Color(0xFF9775FA)),
+            ),
+            const SizedBox(height: 8),
+            DropdownButtonFormField<String>(
+              items: const [
+                DropdownMenuItem(value: 'Bald', child: Text('Bald')),
+                DropdownMenuItem(value: 'Black', child: Text('Black')),
+                DropdownMenuItem(value: 'Blonde', child: Text('Blonde')),
+                DropdownMenuItem(value: 'Brown', child: Text('Brown')),
+              ],
+              onChanged: (value) {},
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+              ),
+            ),
+            const SizedBox(height: 16),
+            const Text(
+              'Noticeable mark:',
+              style: TextStyle(fontSize: 16),
+            ),
+            const SizedBox(height: 8),
+            const TextField(
+              decoration: InputDecoration(
+                hintText: 'tattoos / scars / which place',
+                border: OutlineInputBorder(),
+              ),
+            ),
+            const SizedBox(height: 16),
+            const Text(
+              'Vehicles:',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold,color:Color(0xFF9775FA)),
+            ),
+            const SizedBox(height: 8),
+            const Text(
+              'Model:',
+              style: TextStyle(fontSize: 16,color:Color(0xFF9775FA)),
+            ),
+            const SizedBox(height: 8),
+            DropdownButtonFormField<String>(
+              items: const [
+                DropdownMenuItem(value: 'BMW', child: Text('BMW')),
+                DropdownMenuItem(value: 'Toyota', child: Text('Toyota')),
+                DropdownMenuItem(value: 'Mercedes', child: Text('Mercedes')),
+                DropdownMenuItem(value: 'Ford', child: Text('Ford')),
+              ],
+              onChanged: (value) {},
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+              ),
+            ),
+            const SizedBox(height: 16),
+            const Text(
+              'License Plate:',
+              style: TextStyle(fontSize: 16,color:Color(0xFF9775FA)),
+            ),
+            const SizedBox(height: 8),
+            const TextField(
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+              ),
+            ),
+            const SizedBox(height: 16),
+            const Text(
+              'Color:',
+              style: TextStyle(fontSize: 16,color:Color(0xFF9775FA)),
+            ),
+            const SizedBox(height: 8),
+            DropdownButtonFormField<String>(
+              items: const [
+                DropdownMenuItem(value: 'Black', child: Text('Black')),
+                DropdownMenuItem(value: 'White', child: Text('White')),
+                DropdownMenuItem(value: 'Red', child: Text('Red')),
+                DropdownMenuItem(value: 'Blue', child: Text('Blue')),
+              ],
+              onChanged: (value) {},
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+              ),
+            ),
+            const SizedBox(height: 32),
+            Align(
+              alignment: Alignment.bottomRight,
+              child: ElevatedButton(
+                onPressed: () {
+                  // Navigate to the next page
+                },
+                child: const Text('Next'),
+              ),
+            ),
+          ],
+        ),
       ),
+      bottomNavigationBar: BottomAppBar(
+        shape: const CircularNotchedRectangle(),
+        notchMargin: 8.0,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            IconButton(
+              icon: const Icon(Icons.warning_amber_outlined),
+              onPressed: () {},
+            ),
+            IconButton(
+              icon: const Icon(Icons.home),
+              onPressed: () {},
+            ),
+            IconButton(
+              icon: const Icon(Icons.report_gmailerrorred),
+              onPressed: () {},
+            ),
+            IconButton(
+              icon: const Icon(Icons.info_outline),
+              onPressed: () {},
+            ),
+          ],
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        backgroundColor: const Color.fromARGB(255, 232, 226, 182),
+        child: const Icon(Icons.home),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 }
-
 
 
   // report 5
@@ -3459,14 +3720,14 @@ class SuccessPge extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Success Page'),
-        backgroundColor: Colors.purple[700],
+        backgroundColor: const Color(0xFF9775FA),
       ),
       body: Stack(
         children: [
-          Center(
+          const Center(
             child: Text(
               'Welcome to the Success Page!',
-              style: TextStyle(fontSize: 24, color: Colors.purple[700]),
+              style: TextStyle(fontSize: 24, color: Color(0xFF9775FA)),
             ),
           ),
           
@@ -3482,10 +3743,10 @@ class SuccessPge extends StatelessWidget {
                   MaterialPageRoute(builder: (context) => const SuccessPae()),
                 );
               },
-              child: const Text('Next'),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.purple[700],
               ),
+              child: const Text('Next'),
             ),
           ),
         ],
