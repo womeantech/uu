@@ -644,7 +644,7 @@ class SignUpPage extends StatelessWidget {
     );
   }
 }
-
+//Homepage
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
@@ -763,6 +763,22 @@ class HomePage extends StatelessWidget {
                       ),
                       child: const Text('Home'),
                     ),
+                  ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const GoFundMePage()),
+                        );
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color.fromARGB(255, 253, 252, 250),
+                        foregroundColor: Colors.black,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                      ),
+                      child: const Text('GoFund Me'),
+                    ),
                     ElevatedButton(
                       onPressed: () {
                         // Navigate to AboutUsPage when About Us button is tapped
@@ -833,19 +849,15 @@ class HomePage extends StatelessWidget {
         unselectedItemColor: Colors.black,
         items: const [
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: '',
-          ),
-          BottomNavigationBarItem(
             icon: Icon(Icons.warning),
             label: '',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.forum),
+            icon: Icon(Icons.home),
             label: '',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.chat),
+            icon: Icon(Icons.arrow_forward),
             label: '',
           ),
         ],
@@ -1486,37 +1498,21 @@ class TraumaPage extends StatelessWidget {
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.white,
         selectedItemColor: const Color(0xFF9775FA),
-        unselectedItemColor: Colors.grey,
+        unselectedItemColor: Colors.black,
         items: const [
           BottomNavigationBarItem(
-            icon: Icon(Icons.notifications_outlined),
+            icon: Icon(Icons.warning),
             label: '',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.home_outlined),
+            icon: Icon(Icons.home),
             label: '',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person_outline),
+            icon: Icon(Icons.arrow_forward),
             label: '',
           ),
         ],
-      ),
-
-      // Floating Action Button to navigate to the next page (TraumaPage2)
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.white,
-        child: const Icon(
-          Icons.arrow_forward,
-          color: Color(0xFF9775FA),
-        ),
-        onPressed: () {
-          // Navigate to TraumaPage2 when arrow is clicked
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const TraumaPage2()),
-          );
-        },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat, // Positioned in the bottom center
     );
@@ -1649,18 +1645,18 @@ class TraumaPage2 extends StatelessWidget {
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.white,
         selectedItemColor: const Color(0xFF9775FA),
-        unselectedItemColor: Colors.grey,
+        unselectedItemColor: Colors.black,
         items: const [
           BottomNavigationBarItem(
-            icon: Icon(Icons.notifications_outlined),
+            icon: Icon(Icons.warning),
             label: '',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.home_outlined),
+            icon: Icon(Icons.home),
             label: '',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person_outline),
+            icon: Icon(Icons.arrow_forward),
             label: '',
           ),
         ],
@@ -1878,18 +1874,18 @@ class MentalHealthPage extends StatelessWidget {
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.white,
         selectedItemColor: const Color(0xFF9775FA),
-        unselectedItemColor: Colors.grey,
+        unselectedItemColor: Colors.black,
         items: const [
           BottomNavigationBarItem(
-            icon: Icon(Icons.notifications_outlined),
+            icon: Icon(Icons.warning),
             label: '',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.home_outlined),
+            icon: Icon(Icons.home),
             label: '',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person_outline),
+            icon: Icon(Icons.arrow_forward),
             label: '',
           ),
         ],
@@ -3092,27 +3088,46 @@ class ReportPage extends StatelessWidget {
           children: [
             IconButton(
               icon: const Icon(Icons.warning_amber_outlined),
-              onPressed: () {},
+              onPressed: () {
+                // Navigate to HomePage
+                 Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const ReportPage()),
+                        );
+              },
             ),
             IconButton(
               icon: const Icon(Icons.home),
-              onPressed: () {},
+              onPressed: () {
+                // Navigate to HomePage
+                 Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const HomePage()),
+                        );
+              },
             ),
             IconButton(
               icon: const Icon(Icons.report_gmailerrorred),
-              onPressed: () {},
+              onPressed: () {
+                // Navigate to HomePage
+                 Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const ConsultancyPage()),
+                        );
+              },
             ),
             IconButton(
               icon: const Icon(Icons.info_outline),
-              onPressed: () {},
+              onPressed: () {
+                // Navigate to HomePage
+                 Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const PetitionPage()),
+                        );
+              },
             ),
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        backgroundColor: const Color.fromARGB(255, 232, 226, 182),
-        child: const Icon(Icons.home),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
@@ -3335,27 +3350,46 @@ class NextPage extends StatelessWidget {
           children: [
             IconButton(
               icon: const Icon(Icons.warning_amber_outlined),
-              onPressed: () {},
+              onPressed: () {
+                // Navigate to HomePage
+                 Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const ReportPage()),
+                        );
+              },
             ),
             IconButton(
               icon: const Icon(Icons.home),
-              onPressed: () {},
+              onPressed: () {
+                // Navigate to HomePage
+                 Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const HomePage()),
+                        );
+              },
             ),
             IconButton(
               icon: const Icon(Icons.report_gmailerrorred),
-              onPressed: () {},
+              onPressed: () {
+                // Navigate to HomePage
+                 Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const ConsultancyPage()),
+                        );
+              },
             ),
             IconButton(
               icon: const Icon(Icons.info_outline),
-              onPressed: () {},
+              onPressed: () {
+                // Navigate to HomePage
+                 Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const PetitionPage()),
+                        );
+              },
             ),
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        backgroundColor: const Color.fromARGB(255, 232, 226, 182),
-        child: const Icon(Icons.home),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
@@ -3495,27 +3529,46 @@ class Report3 extends StatelessWidget {
           children: [
             IconButton(
               icon: const Icon(Icons.warning_amber_outlined),
-              onPressed: () {},
+              onPressed: () {
+                // Navigate to HomePage
+                 Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const ReportPage()),
+                        );
+              },
             ),
             IconButton(
               icon: const Icon(Icons.home),
-              onPressed: () {},
+              onPressed: () {
+                // Navigate to HomePage
+                 Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const HomePage()),
+                        );
+              },
             ),
             IconButton(
               icon: const Icon(Icons.report_gmailerrorred),
-              onPressed: () {},
+              onPressed: () {
+                // Navigate to HomePage
+                 Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const ConsultancyPage()),
+                        );
+              },
             ),
             IconButton(
               icon: const Icon(Icons.info_outline),
-              onPressed: () {},
+              onPressed: () {
+                // Navigate to HomePage
+                 Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const PetitionPage()),
+                        );
+              },
             ),
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        backgroundColor: const Color.fromARGB(255, 232, 226, 182),
-        child: const Icon(Icons.home),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
@@ -3541,7 +3594,7 @@ class Report4 extends StatelessWidget {
           children: [
             const Text(
               'Was the perpetrator carrying a weapon',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold,color:Color(0xFF9775FA)),
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xFF9775FA)),
             ),
             const SizedBox(height: 8),
             const TextField(
@@ -3554,17 +3607,17 @@ class Report4 extends StatelessWidget {
             const SizedBox(height: 16),
             const Text(
               'The perpetrator Description',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold,color:Color(0xFF9775FA)),
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xFF9775FA)),
             ),
             const SizedBox(height: 12),
             const Text(
               'Physical Features:',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold,color:Color(0xFF9775FA)),
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xFF9775FA)),
             ),
             const SizedBox(height: 8),
             const Text(
               'Height:',
-              style: TextStyle(fontSize: 16,color:Color(0xFF9775FA)),
+              style: TextStyle(fontSize: 16, color: Color(0xFF9775FA)),
             ),
             const SizedBox(height: 8),
             const TextField(
@@ -3576,7 +3629,7 @@ class Report4 extends StatelessWidget {
             const SizedBox(height: 16),
             const Text(
               'Hair Color:',
-              style: TextStyle(fontSize: 16,color:Color(0xFF9775FA)),
+              style: TextStyle(fontSize: 16, color: Color(0xFF9775FA)),
             ),
             const SizedBox(height: 8),
             DropdownButtonFormField<String>(
@@ -3592,11 +3645,12 @@ class Report4 extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 16),
+            // Modified "Noticeable Mark" text to purple
             const Text(
               'Noticeable mark:',
-              style: TextStyle(fontSize: 16),
+              style: TextStyle(fontSize: 16, color: Color(0xFF9775FA)), // purple color
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: 16),
             const TextField(
               decoration: InputDecoration(
                 hintText: 'tattoos / scars / which place',
@@ -3606,12 +3660,12 @@ class Report4 extends StatelessWidget {
             const SizedBox(height: 16),
             const Text(
               'Vehicles:',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold,color:Color(0xFF9775FA)),
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xFF9775FA)),
             ),
             const SizedBox(height: 8),
             const Text(
               'Model:',
-              style: TextStyle(fontSize: 16,color:Color(0xFF9775FA)),
+              style: TextStyle(fontSize: 16, color: Color(0xFF9775FA)),
             ),
             const SizedBox(height: 8),
             DropdownButtonFormField<String>(
@@ -3629,7 +3683,7 @@ class Report4 extends StatelessWidget {
             const SizedBox(height: 16),
             const Text(
               'License Plate:',
-              style: TextStyle(fontSize: 16,color:Color(0xFF9775FA)),
+              style: TextStyle(fontSize: 16, color: Color(0xFF9775FA)),
             ),
             const SizedBox(height: 8),
             const TextField(
@@ -3640,7 +3694,7 @@ class Report4 extends StatelessWidget {
             const SizedBox(height: 16),
             const Text(
               'Color:',
-              style: TextStyle(fontSize: 16,color:Color(0xFF9775FA)),
+              style: TextStyle(fontSize: 16, color: Color(0xFF9775FA)),
             ),
             const SizedBox(height: 8),
             DropdownButtonFormField<String>(
@@ -3660,7 +3714,11 @@ class Report4 extends StatelessWidget {
               alignment: Alignment.bottomRight,
               child: ElevatedButton(
                 onPressed: () {
-                  // Navigate to the next page
+                  // Navigate to the next page (Example: Report5)
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const Report5()),
+                  );
                 },
                 child: const Text('Next'),
               ),
@@ -3676,25 +3734,455 @@ class Report4 extends StatelessWidget {
           children: [
             IconButton(
               icon: const Icon(Icons.warning_amber_outlined),
-              onPressed: () {},
+              onPressed: () {
+                // Navigate to HomePage
+                 Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const ReportPage()),
+                        );
+              },
             ),
             IconButton(
               icon: const Icon(Icons.home),
-              onPressed: () {},
+              onPressed: () {
+                // Navigate to HomePage
+                 Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const HomePage()),
+                        );
+              },
             ),
             IconButton(
               icon: const Icon(Icons.report_gmailerrorred),
-              onPressed: () {},
+              onPressed: () {
+                // Navigate to HomePage
+                 Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const ConsultancyPage()),
+                        );
+              },
             ),
             IconButton(
               icon: const Icon(Icons.info_outline),
-              onPressed: () {},
+              onPressed: () {
+                // Navigate to HomePage
+                 Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const PetitionPage()),
+                        );
+              },
+            ),
+          ],
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+    );
+  }
+}
+
+  // report 5
+class Report5 extends StatelessWidget {
+  const Report5({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text(''),
+      ),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              maxLines: 6,
+              'other thing you want to describe:',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xFF9775FA)),
+            ),
+            const SizedBox(height: 8),
+            const TextField(
+              decoration: InputDecoration(
+                hintText: '',
+                border: OutlineInputBorder(),
+              ),
+              maxLines: 5,
+            ),
+            const SizedBox(height: 16),
+            const Text(
+              'Evidence submission',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xFF9775FA)),
+            ),
+             const Text(
+              
+              'Do you have any evidence to submit:',
+              style: TextStyle(fontSize: 16, color: Color(0xFF9775FA)), // purple color
+            ),
+            const SizedBox(height: 16),
+            const TextField(
+              decoration: InputDecoration(
+                hintText: 'Photos,Videos,messages...',
+                border: OutlineInputBorder(),
+              ),
+              maxLines: 4,
+            ),
+            const SizedBox(height: 16),
+            // DropdownButtonFormField<String>(
+            //   items: const [
+            //     DropdownMenuItem(value: 'Bald', child: Text('Bald')),
+            //     DropdownMenuItem(value: 'Black', child: Text('Black')),
+            //     DropdownMenuItem(value: 'Blonde', child: Text('Blonde')),
+            //     DropdownMenuItem(value: 'Brown', child: Text('Brown')),
+            //   ],
+            //   onChanged: (value) {},
+            //   decoration: const InputDecoration(
+            //     border: OutlineInputBorder(),
+            //   ),
+            // ),
+            // const SizedBox(height: 16),
+            // Modified "Noticeable Mark" text to purple
+             const Text(
+    'Would you like help gathering evidence (medical,legal advice):',
+    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xFF9775FA)),
+    softWrap: false,  // Prevent text from wrapping to the next line
+    overflow: TextOverflow.ellipsis,  // Add ellipsis if text exceeds the available width
+  ),
+              const Row(
+                children: [
+                  Row(
+                    children: [
+                      Checkbox(value: false, onChanged: null),
+                      Text('Yes'),
+                    ],
+                  ),
+                  SizedBox(height: 8),
+                  Row(
+                    children: [
+                      Checkbox(value: false, onChanged: null),
+                      Text('No'),
+                    ],
+                  ),
+                ],
+              ),
+              const SizedBox(height: 40),
+             const Text(
+    'Would you like help gathering evidence (medical,legal advice):',
+    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xFF9775FA)),
+    softWrap: false,  // Prevent text from wrapping to the next line
+    overflow: TextOverflow.ellipsis,  // Add ellipsis if text exceeds the available width
+  ),
+              const Row(
+                children: [
+                  Row(
+                    children: [
+                      Checkbox(value: false, onChanged: null),
+                      Text('Yes'),
+                    ],
+                  ),
+                  SizedBox(height: 40),
+                  Row(
+                    children: [
+                      Checkbox(value: false, onChanged: null),
+                      Text('No'),
+                    ],
+                  ),
+                ],
+              ),
+              const SizedBox(height: 40),
+              const Text(
+    'Would you like help gathering evidence (medical,legal advice):',
+    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xFF9775FA)),
+    softWrap: false,  // Prevent text from wrapping to the next line
+    overflow: TextOverflow.ellipsis,  // Add ellipsis if text exceeds the available width
+  ),
+
+              const SizedBox(height: 16),
+              const Row(
+                children: [
+                  Row(
+                    children: [
+                      Checkbox(value: false, onChanged: null),
+                      Text('Yes'),
+                    ],
+                  ),
+                  SizedBox(height: 40),
+                  Row(
+                    children: [
+                      Checkbox(value: false, onChanged: null),
+                      Text('No'),
+                    ],
+                  ),
+                ],
+              ),
+              const SizedBox(height: 40),
+            
+            Align(
+              alignment: Alignment.bottomRight,
+              child: ElevatedButton(
+                onPressed: () {
+                  // Navigate to the next page (Example: Report5)
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const SuccessPae()),
+                  );
+                },
+                child: const Text('Nextt'),
+              ),
+            ),
+          ],
+        ),
+      ),
+      bottomNavigationBar: BottomAppBar(
+        shape: const CircularNotchedRectangle(),
+        notchMargin: 8.0,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            IconButton(
+              icon: const Icon(Icons.warning_amber_outlined),
+              onPressed: () {
+                // Navigate to HomePage
+                 Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const ReportPage()),
+                        );
+              },
+            ),
+            IconButton(
+              icon: const Icon(Icons.home),
+              onPressed: () {
+                // Navigate to HomePage
+                 Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const HomePage()),
+                        );
+              },
+            ),
+            IconButton(
+              icon: const Icon(Icons.report_gmailerrorred),
+              onPressed: () {
+                // Navigate to HomePage
+                 Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const ConsultancyPage()),
+                        );
+              },
+            ),
+            IconButton(
+              icon: const Icon(Icons.info_outline),
+              onPressed: () {
+                // Navigate to HomePage
+                 Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const PetitionPage()),
+                        );
+              },
+            ),
+          ],
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+    );
+  }
+}
+
+  //report 6
+  
+class SuccessPae extends StatefulWidget {
+  const SuccessPae({super.key});
+
+  @override
+  _SuccessPaeState createState() => _SuccessPaeState();
+}
+
+class _SuccessPaeState extends State<SuccessPae> {
+  // Variable to hold the selected dropdown value
+  String? _selectedOption;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text(''),
+      ),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              'Current situation',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xFF9775FA)),
+            ),
+            const SizedBox(height: 20),
+            const Text(
+              'Would you like help gathering evidence (medical, legal advice):',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xFF9775FA)),
+              softWrap: false,
+              overflow: TextOverflow.ellipsis,
+            ),
+            const SizedBox(height: 20),
+            const Row(
+              children: [
+                Row(
+                  children: [
+                    Checkbox(value: false, onChanged: null),
+                    Text('Yes'),
+                  ],
+                ),
+                SizedBox(width: 40),
+                Row(
+                  children: [
+                    Checkbox(value: false, onChanged: null),
+                    Text('No'),
+                  ],
+                ),
+              ],
+            ),
+            const SizedBox(height: 20),
+
+            // Radio button options for choosing one of three options
+            const Text(
+              'Would you like this report to be shared publicly for awareness or feedback:',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xFF9775FA)),
+            ),
+            const SizedBox(height: 8),
+            Column(
+              children: [
+                ListTile(
+                  title: const Text('Yes, anonymously'),
+                  leading: Radio<String>(
+                    value: 'Yes, anonymously',
+                    groupValue: _selectedOption,
+                    onChanged: (String? value) {
+                      setState(() {
+                        _selectedOption = value;
+                      });
+                    },
+                    activeColor: const Color(0xFF9775FA),
+                  ),
+                ),
+                ListTile(
+                  title: const Text('No, Keep private'),
+                  leading: Radio<String>(
+                    value: 'No, Keep private',
+                    groupValue: _selectedOption,
+                    onChanged: (String? value) {
+                      setState(() {
+                        _selectedOption = value;
+                      });
+                    },
+                    activeColor: const Color(0xFF9775FA),
+                  ),
+                ),
+                ListTile(
+                  title: const Text('Yes, but only for whom concerned'),
+                  leading: Radio<String>(
+                    value: 'Yes, but only for whom concerned',
+                    groupValue: _selectedOption,
+                    onChanged: (String? value) {
+                      setState(() {
+                        _selectedOption = value;
+                      });
+                    },
+                    activeColor: const Color(0xFF9775FA),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 20),
+
+            // Additional Information text
+            const Text(
+              'Additional information',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xFF9775FA)),
+            ),
+            const SizedBox(height: 16),
+            const TextField(
+              decoration: InputDecoration(
+                hintText: 'Photos, Videos, messages...',
+                border: OutlineInputBorder(),
+              ),
+              maxLines: 4,
+            ),
+            const SizedBox(height: 8),
+
+            // Submit Button to show success message
+            Align(
+              alignment: Alignment.bottomRight,
+              child: ElevatedButton(
+                onPressed: () {
+                  // Show success message (Snackbar)
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Successfully submitted!', style: TextStyle(color: Colors.white)),
+                      backgroundColor: Colors.green, // Green color for success
+                    ),
+                  );
+                },
+                child: const Text('Submit'),
+              ),
+            ),
+          ],
+        ),
+      ),
+      bottomNavigationBar: BottomAppBar(
+        shape: const CircularNotchedRectangle(),
+        notchMargin: 8.0,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            IconButton(
+              icon: const Icon(Icons.warning_amber_outlined),
+              onPressed: () {
+                // Navigate to HomePage
+                 Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const ReportPage()),
+                        );
+              },
+            ),
+            IconButton(
+              icon: const Icon(Icons.home),
+              onPressed: () {
+                // Navigate to HomePage
+                 Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const HomePage()),
+                        );
+              },
+            ),
+            IconButton(
+              icon: const Icon(Icons.report_gmailerrorred),
+              onPressed: () {
+                // Navigate to HomePage
+                 Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const ConsultancyPage()),
+                        );
+              },
+            ),
+            IconButton(
+              icon: const Icon(Icons.info_outline),
+              onPressed: () {
+                // Navigate to HomePage
+                 Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const PetitionPage()),
+                        );
+              },
             ),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          // Navigate to HomePage
+                 Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const HomePage()),
+                        );
+        },
         backgroundColor: const Color.fromARGB(255, 232, 226, 182),
         child: const Icon(Icons.home),
       ),
@@ -3702,81 +4190,383 @@ class Report4 extends StatelessWidget {
     );
   }
 }
-
-
-  // report 5
-class SuccessPge extends StatelessWidget {
-  const SuccessPge({super.key});
+//gofundme
+class GoFundMePage extends StatelessWidget {
+  const GoFundMePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // Display the success message after the page loads
-    Future.delayed(Duration.zero, () {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Successfully completed')),
-      );
-    });
-
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Success Page'),
-        backgroundColor: const Color(0xFF9775FA),
-      ),
-      body: Stack(
-        children: [
-          const Center(
-            child: Text(
-              'Welcome to the Success Page!',
-              style: TextStyle(fontSize: 24, color: Color(0xFF9775FA)),
-            ),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        iconTheme: const IconThemeData(color: Colors.white),
+        title: const Text(
+          'GoFundMe',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 24.0,
+            fontWeight: FontWeight.bold,
           ),
-          
-          // Button positioned at the bottom right to navigate to ReportPage6
-          Positioned(
-            bottom: 16,
-            right: 16,
-            child: ElevatedButton(
+        ),
+        centerTitle: true,
+      ),
+      backgroundColor: const Color.fromARGB(255, 149, 125, 222),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            // Top image with shadow and rounded corners
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(15.0),
+                child: Material(
+                  elevation: 8.0,
+                  shadowColor: Colors.black.withOpacity(0.3),
+                  child: Image.asset(
+                    'assets/lll.jpg', // Your image path
+                    height: 200.0,
+                    width: double.infinity,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 20.0),
+            
+            // Main content with rounded card-like sections
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: Material(
+                elevation: 4.0,
+                borderRadius: BorderRadius.circular(15.0),
+                color: Colors.white.withOpacity(0.9),
+                child: const Padding(
+                  padding: EdgeInsets.all(16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.verified_user_outlined,
+                        color: Colors.purple,
+                        size: 50.0,
+                      ),
+                      SizedBox(height: 12.0),
+                      Text(
+                        'Verified GoFundMe Campaign',
+                        style: TextStyle(
+                          fontSize: 28.0,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      SizedBox(height: 16.0),
+                      Text(
+                        'First, read the verified GoFundMe list of individuals and causes that need funding and ensure your contributions make a direct impact.',
+                        style: TextStyle(
+                          fontSize: 18.0,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black87,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      SizedBox(height: 16.0),
+                      Text(
+                        'With your support, we can make a difference. Every donation helps bring us closer to our mission. Thank you for standing with us!',
+                        style: TextStyle(
+                          fontSize: 16.0,
+                          color: Colors.black54,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      SizedBox(height: 30.0),
+                    ],
+                  ),
+           ),
+              ),
+            ),
+            
+            const SizedBox(height: 30.0),
+
+
+// Donation button with hover effect (subtle animation)
+            ElevatedButton(
               onPressed: () {
-                // Navigate to ReportPage6 when the button is pressed
+                // Navigate to another page
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const SuccessPae()),
+                  MaterialPageRoute(builder: (context) => const GoFundMePage2()),
                 );
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.purple[700],
+                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                backgroundColor: Colors.white,
+                foregroundColor: const Color(0xFF9775FA),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30.0),
+                ),
+                elevation: 8,
+                shadowColor: Colors.black.withOpacity(0.2),
               ),
-              child: const Text('Next'),
+              child: const Text(
+                'Donate Now',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ),
-          ),
-        ],
+            const SizedBox(height: 40.0),
+          ],
+        ),
       ),
     );
   }
 }
-
-  //report 6
-  class SuccessPae extends StatelessWidget {
-  const SuccessPae({super.key});
+class GoFundMePage2 extends StatelessWidget {
+  const GoFundMePage2({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // Display the success message after the page loads
-    Future.delayed(Duration.zero, () {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Successfully completed')),
-      );
-    });
-
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Success Page'),
-        backgroundColor: Colors.purple[700],
+        title: const Text('GoFundMe Campaign'),
+        backgroundColor: const Color(0xFF9775FA),
       ),
-      body: Center(
-        child: Text(
-          'Welcome to the Success Page!',
-          style: TextStyle(fontSize: 24, color: Colors.purple[700]),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            // Top Purple Section with Image and Text Side by Side
+            Container(
+              decoration: const BoxDecoration(
+                color: Color(0xFF9775FA),
+                borderRadius: BorderRadius.vertical(bottom: Radius.circular(30)),
+              ),
+              padding: const EdgeInsets.all(20.0),
+              child: const Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  // Circular Image
+                  CircleAvatar(
+                    radius: 60,
+                    backgroundImage: AssetImage('assets/prowomen.png'),
+                  ),
+                  SizedBox(width: 20),
+                  // Text Info Next to the Image
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Samiha',
+                        style: TextStyle(
+                          fontSize: 26,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                      SizedBox(height: 8),
+                      Text(
+                        'Student',
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Colors.white,
+                        ),
+                      ),
+                      SizedBox(height: 6),
+                      Text(
+                        'Victm',
+                        textAlign: TextAlign.start,
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 20),
+            // Description Section
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: Column(
+                children: [
+                  const Text(
+                    'I grew up in a small village with limited opportunities. Despite the hardships, I was a bright, curious girl who loved reading and dreamed of becoming a teacher. My parents supported my ambitions, doing all they could to keep me in school, though it was never easy.\n\n'
+                    'One evening, on my way home, I was assaulted by someone from my village. That experience shattered my sense of safety and left me feeling voiceless and lost. I was afraid to speak out, terrified that I would be blamed or dismissed. For months, I kept silent, carrying the trauma within me while trying to keep up with my studies.Gradually, I changed. I withdrew from my friends, my grades dropped, and my laughter faded. My mother noticed but didn’t know how to help. Eventually, a teacher I trusted asked me gently if something was wrong. Her kindness gave me the courage to finally open up about what had happened.',
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.black87,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 20),
+                  // Left/Right Arrow Buttons
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      IconButton(
+                        onPressed: () {
+                          Navigator.pop(context); // Goes back to the previous campaign
+                        },
+                        icon: const Icon(Icons.arrow_back_ios, color: Color(0xFF9775FA)),
+                      ),
+                      const Text(
+                        'Samiha\'s Campaign',
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Color(0xFF9775FA),
+                        ),
+                      ),
+                      IconButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => const GoFundMePage3()),
+                          );
+                        },
+                        icon: const Icon(Icons.arrow_forward_ios, color: Colors.purple),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+                  // Donate Button
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const GoFundMePage3()),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                      backgroundColor: Colors.white,
+                      foregroundColor: const Color(0xFF9775FA),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30.0),
+                      ),
+                      elevation: 5,
+                    ),
+                    child: const Text(
+                      'Donate To Her !',
+                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 30),
+            // Bottom Navigation Bar (Optional, can add if needed)
+          ],
+        ),
+      ),
+    );
+  }
+}
+//gofund3
+class GoFundMePage3 extends StatelessWidget {
+  const GoFundMePage3({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('GoFundMe Campaign'),
+        backgroundColor: const Color(0xFF9775FA),
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            // Top Purple Section with Image and Text Side by Side
+            Container(
+              decoration: const BoxDecoration(
+                color: Color(0xFF9775FA),
+                borderRadius: BorderRadius.vertical(bottom: Radius.circular(30)),
+              ),
+              padding: const EdgeInsets.all(20.0),
+              child: const Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  // Circular Image
+                  CircleAvatar(
+                    radius: 60,
+                    backgroundImage: AssetImage('assets/prowomen.png'),
+                  ),
+                  SizedBox(width: 20),
+                  // Text Info Next to the Image
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Aliha',
+                        style: TextStyle(
+                          fontSize: 26,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                      SizedBox(height: 8),
+                      Text(
+                        'Engineer',
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Colors.white,
+                        ),
+                      ),
+                      SizedBox(height: 6),
+                      Text(
+                        'To be voice',
+                        textAlign: TextAlign.start,
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 20),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20.0),
+              child: Text(
+                'I grew up in a close-knit neighborhood, where everyone knew each other, and I felt safe. I had big dreams, hoping one day to make a difference in my community, but life took an unexpected turn. One night, I faced an assault that left me feeling broken, vulnerable, and lost. The pain wasn’t just physical—it tore at my spirit, my sense of security, and my trust in others.For months, I kept it to myself, terrified that people wouldn’t believe me or, worse, would blame me. I became withdrawn, shutting out friends and family. My once-bright future felt distant, and each day was a struggle just to get out of bed. I wanted to forget, but the memory haunted me.One afternoon, a friend noticed my silence and gently asked if I was okay. I tried to brush it off, but something about her genuine concern made me break down. I confided in her, pouring out the fear, shame, and anger I had kept inside. She listened without judgment, reminding me that I was not alone.With her encouragement, I found my way to a support group for survivors like me. Meeting others who had faced similar experiences was a turning point. Through their stories, I began to see hope. With therapy and the support of this newfound community, I started reclaiming my voice and my strength. The journey was hard, filled with moments of doubt and pain, but each day, I felt a little bit stronger.',
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Colors.black,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
+            const SizedBox(height: 30),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const GoFundMe3Page()),
+                );
+              },
+              style: ElevatedButton.styleFrom(
+                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                backgroundColor: Colors.white,
+                foregroundColor: const Color(0xFF9775FA),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30.0),
+                ),
+                elevation: 5,
+              ),
+              child: const Text(
+                'Donate To Aliyah!',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+            ),
+            const SizedBox(height: 30),
+            // Bottom Navigation Bar
+            const BottomNavigationBarWidget(),
+          ],
         ),
       ),
     );
@@ -3785,3 +4575,212 @@ class SuccessPge extends StatelessWidget {
 
 
 
+class GoFundMe3Page extends StatelessWidget {
+  const GoFundMe3Page({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: const Color(0xFF9775FA), // Background color from the design
+      resizeToAvoidBottomInset: true, // Prevent bottom overflow when keyboard appears
+      body: SingleChildScrollView( // Allows the screen to scroll if the content overflows
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            minHeight: MediaQuery.of(context).size.height, // Ensure content fills the screen height
+          ),
+          child: IntrinsicHeight(
+            child: Padding(
+              padding: const EdgeInsets.all(20.0), // Padding around the page
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start, // Align content to the left
+                children: [
+                  const Spacer(), // Pushes content towards the bottom
+
+                  const Text(
+                    'DONATE',
+                    style: TextStyle(
+                      fontSize: 32.0,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white, // Bold white text
+                    ),
+                  ),
+                  const SizedBox(height: 20.0), // Spacing between the title and fields
+                  // Full Name TextField
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.8, // Set width to 80% of screen
+                    height: 50.0, // Set height of the TextField
+                    child: TextField(
+                      decoration: InputDecoration(
+                        labelText: 'Full Name',
+                        labelStyle: const TextStyle(color: Colors.white),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(16.0),
+                          borderSide: const BorderSide(color: Colors.white),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(16.0),
+                          borderSide: const BorderSide(color: Colors.white),
+                        ),
+                        filled: true,
+                        fillColor: const Color(0xFF9775FA), // Purple background for the input
+                        contentPadding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 20.0),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.8, // Set width to 80% of screen
+                    height: 50.0, // Set height of the TextField
+                    child: TextField(
+                      decoration: InputDecoration(
+                        labelText: 'Payment Method',
+                        labelStyle: const TextStyle(color: Colors.white),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(16.0),
+                          borderSide: const BorderSide(color: Colors.white),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(16.0),
+                          borderSide: const BorderSide(color: Colors.white),
+                        ),
+                        filled: true,
+                        fillColor: const Color(0xFF9775FA), // Purple background for the input
+                        contentPadding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 20.0),
+
+                  // Email TextField
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.8, // Set width to 80% of screen
+                    height: 50.0, // Set height of the TextField
+                    child: TextField(
+                      decoration: InputDecoration(
+                        labelText: 'Account',
+                        labelStyle: const TextStyle(color: Colors.white),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(16.0),
+                          borderSide: const BorderSide(color: Colors.white),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(16.0),
+                          borderSide: const BorderSide(color: Colors.white),
+                        ),
+                        filled: true,
+                        fillColor: const Color(0xFF9775FA), // Purple background for the input
+                        contentPadding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 20.0),
+                  // Story TextField (New field to capture user's story)
+              SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.8, // Set width to 80% of screen
+                    height: 50.0, // Set height of the TextField
+                    child: TextField(
+                      decoration: InputDecoration(
+                        labelText: 'Amount',
+                        labelStyle: const TextStyle(color: Colors.white),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(16.0),
+                          borderSide: const BorderSide(color: Colors.white),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(16.0),
+                          borderSide: const BorderSide(color: Colors.white),
+                        ),
+                        filled: true,
+                        fillColor: const Color(0xFF9775FA), // Purple background for the input
+                        contentPadding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 20.0),
+                  // Register Button
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.4, // Set width to 40% of screen
+                    height: 40.0, // Set button height
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.white, // Button background color
+                        foregroundColor: Colors.black, // Button text color
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(50.0), // Rounded button edges
+                        ),
+                      ),
+                      onPressed: () {
+                        _showRegistrationMessage(context); // Show success message on click
+                      },
+                      child: const Text(
+                        'Donate',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold, // Bold text
+                          fontSize: 16.0,
+                          color: Colors.black, // Text color
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 20.0), // Spacing below the button
+
+                  const Spacer(), // Spacer at the bottom
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+  // Method to show the story sharing success message
+  void _showRegistrationMessage(BuildContext context) {
+    final overlay = Overlay.of(context);
+    final overlayEntry = OverlayEntry(
+      builder: (context) => Positioned(
+        top: 50.0,
+        right: 20.0,
+        child: Material(
+          color: Colors.transparent,
+          child: Container(
+            padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+            decoration: BoxDecoration(
+              color: Colors.green, // Success message background color
+              borderRadius: BorderRadius.circular(10.0),
+              boxShadow: const [
+                BoxShadow(
+                  color: Colors.black26,
+                  blurRadius: 6.0,
+                  offset: Offset(2, 2), // Shadow effect
+                ),
+              ],
+            ),
+            child: const Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(Icons.check_circle, color: Colors.white), // Check icon
+                SizedBox(width: 10.0),
+                Text(
+                  'Your Have Sucssesfully Donated Thanks!',
+                  style: TextStyle(
+                    color: Colors.white, // White text
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+
+    overlay.insert(overlayEntry); // Show the message
+
+    // Remove the message after 3 seconds
+    Future.delayed(const Duration(seconds: 3), () {
+      overlayEntry.remove();
+      Navigator.pop(context); // Navigate back to the previous page after success
+    });
+  }
+}
